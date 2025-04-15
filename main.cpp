@@ -23,7 +23,7 @@ int main()
     }
 
     sf::Texture texture_gun;
-    texture_gun.loadFromFile("Texturs/Gun.png");
+    texture_gun.loadFromFile("Texturs/Guns_spriteShip.png");
 
     
     // Параметры анимации
@@ -34,6 +34,12 @@ int main()
     float animationSpeed = 0.05f;
     float elapsedTime = 0.f;
 
+    // Параметры анимации оружия
+    const int frameWidth_gun = 32;
+    const int frameHeight_gun = 32;
+    const int numFrames_gun = 6;
+
+
     // Настройка спрайта
     sf::Sprite sprite(texture);
     sprite.setTextureRect(sf::IntRect(0, 0, frameWidth, frameHeight));
@@ -41,7 +47,8 @@ int main()
     sprite.setScale(4.f, 4.f); // Увеличим спрайт для лучшей видимости
 
     sf::Sprite gun(texture_gun);
-    gun.setScale(0.5, 0.5);
+    sprite.setTextureRect(sf::IntRect(0, 0, frameWidth_gun, frameHeight_gun));
+   // gun.setScale(0.5, 0.5);
     gun.setPosition(400, 470);
     gun.setOrigin(texture.getSize().x / 2.f - 50, texture.getSize().y / 2.f);
     // Параметры движения
