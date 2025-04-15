@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include<iostream>
+
+using namespace std;
 int main()
 {
     
@@ -19,6 +21,10 @@ int main()
         std::cerr << "Error: Could not load texture!" << std::endl;
         return 1;
     }
+
+    sf::Texture texture_gun;
+    texture_gun.loadFromFile("Texturs/Gun.png");
+
     
     // Параметры анимации
     const int frameWidth = 32;
@@ -34,6 +40,10 @@ int main()
     sprite.setPosition(300, 400);
     sprite.setScale(4.f, 4.f); // Увеличим спрайт для лучшей видимости
 
+    sf::Sprite gun(texture_gun);
+    gun.setScale(0.5, 0.5);
+    gun.setPosition(400, 470);
+    gun.setOrigin(texture.getSize().x / 2.f - 50, texture.getSize().y / 2.f);
     // Параметры движения
     float speed = 0.05f;
     bool isMoving = false;
@@ -53,6 +63,17 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
+
+        sf::Vector2f direction = worldPos - gun.getPosition();
+        float angle = atan2(direction.y, direction.x);
+        float angel_grad = angle * 180 / 3.14159265f;
+        gun.setRotation(angel_grad);
+
+
+
         // Обработка управления
         isMoving = false;
         sf::Vector2f movement(0.f, 0.f);
@@ -62,12 +83,16 @@ int main()
             isMoving = true;
             facingRight = false;
             sprite.move(-speed, 0);
+            gun.setScale(-0.5, 0.5);
+            
+        
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             movement.x += speed;
             isMoving = true;
             facingRight = true;
             sprite.move(speed,0);
+            gun.setScale(0.5, 0.5);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             movement.y -= speed;
@@ -79,7 +104,7 @@ int main()
             isMoving = true;
             sprite.move(0, speed);
         }
-
+        gun.setPosition(sprite.getPosition().x + 40, sprite.getPosition().y + 70);
         // Применяем движение
        // sprite.move(movement * deltaTime);
 
@@ -92,6 +117,7 @@ int main()
                 0,
                 facingRight ? frameWidth : -frameWidth, // Отражение спрайта
                 frameHeight));
+
             elapsedTime = 0.f;
         }
 
@@ -110,6 +136,7 @@ int main()
 
         window.clear();
         window.draw(sprite);
+        window.draw(gun);
         window.display();
     }
 
