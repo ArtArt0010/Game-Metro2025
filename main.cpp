@@ -2,20 +2,21 @@
 #include<iostream>
 
 using namespace std;
+
 int main()
 {
-    
+
     sf::RectangleShape A({ 70, 90 });
-    
+
     A.setPosition(400, 400);
 
 
     sf::RenderWindow window(sf::VideoMode(900, 800), "SFML works!");
-    
+
 
     sf::Texture texture;
 
-    if (!texture.loadFromFile("Texturs/Run_sheet.png")) // Путь относительно exe-файла
+    if (!texture.loadFromFile("Texturs/Run_sheet.png"))
     {
         // Если не получилось, выводим ошибку в консоль
         std::cerr << "Error: Could not load texture!" << std::endl;
@@ -23,9 +24,9 @@ int main()
     }
 
     sf::Texture texture_gun;
-    texture_gun.loadFromFile("Texturs/Guns_spriteShip.png");
+    texture_gun.loadFromFile("Texturs/Gun_animate.png");
 
-    
+
     // Параметры анимации
     const int frameWidth = 32;
     const int frameHeight = 32;
@@ -35,10 +36,12 @@ int main()
     float elapsedTime = 0.f;
 
     // Параметры анимации оружия
-    const int frameWidth_gun = 32;
+    const int frameWidth_gun = 96;
     const int frameHeight_gun = 32;
-    const int numFrames_gun = 6;
-
+    const int numFrames_gun = 5;
+    int currentFrame_gun = 0;
+    float animationSpeed_gun = 0.025f;
+    float elapsedTime_gun = 0.f;
 
     // Настройка спрайта
     sf::Sprite sprite(texture);
@@ -47,17 +50,17 @@ int main()
     sprite.setScale(4.f, 4.f); // Увеличим спрайт для лучшей видимости
 
     sf::Sprite gun(texture_gun);
-    sprite.setTextureRect(sf::IntRect(0, 0, frameWidth_gun, frameHeight_gun));
-   // gun.setScale(0.5, 0.5);
+    gun.setTextureRect(sf::IntRect(0, 0, frameWidth_gun, frameHeight_gun));
+    gun.setScale(1.5, 1.5);
     gun.setPosition(400, 470);
-    gun.setOrigin(texture.getSize().x / 2.f - 50, texture.getSize().y / 2.f);
+    gun.setOrigin(texture.getSize().x / 2.f - 110, texture.getSize().y / 2.f - 10);
     // Параметры движения
     float speed = 0.05f;
     bool isMoving = false;
     bool facingRight = true;
 
     sf::Clock clock;
-    
+
 
     while (window.isOpen())
     {
@@ -71,15 +74,19 @@ int main()
                 window.close();
         }
 
+
         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
         sf::Vector2f worldPos = window.mapPixelToCoords(mousePos);
 
         sf::Vector2f direction = worldPos - gun.getPosition();
         float angle = atan2(direction.y, direction.x);
         float angel_grad = angle * 180 / 3.14159265f;
-        gun.setRotation(angel_grad);
+        if (gun.getScale().x < 0) {
+            angel_grad += 180.f;
+        }
+            gun.setRotation(angel_grad);
 
-
+        
 
         // Обработка управления
         isMoving = false;
@@ -90,16 +97,20 @@ int main()
             isMoving = true;
             facingRight = false;
             sprite.move(-speed, 0);
-            gun.setScale(-0.5, 0.5);
-            
-        
+
+
+           
+            gun.setScale(-1.5, 1.5);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             movement.x += speed;
             isMoving = true;
             facingRight = true;
-            sprite.move(speed,0);
-            gun.setScale(0.5, 0.5);
+            sprite.move(speed, 0);
+
+            
+            gun.setScale(1.5, 1.5);
+
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             movement.y -= speed;
@@ -126,6 +137,41 @@ int main()
                 frameHeight));
 
             elapsedTime = 0.f;
+        }
+
+
+
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            elapsedTime_gun += deltaTime; // Не забываем увеличивать таймер
+
+            if (elapsedTime_gun >= animationSpeed_gun)
+            {
+                // Обновляем кадр анимации
+                currentFrame_gun = (currentFrame_gun + 1) % numFrames_gun;
+
+                gun.setTextureRect(sf::IntRect(
+                    currentFrame_gun * frameWidth_gun, // X-позиция кадра
+                    0,                                // Y-позиция (если есть несколько строк анимации)
+                    frameWidth_gun,
+                    frameHeight_gun
+                ));
+
+                elapsedTime_gun = 0.f; // Сбрасываем таймер
+
+                // Если анимация завершила цикл
+                if (currentFrame_gun == numFrames_gun - 1) {
+                    // Дополнительные действия по завершению анимации
+                }
+            }
+        }
+        else
+        {
+            // Сброс анимации, когда кнопка не нажата
+            currentFrame_gun = 0;
+            gun.setTextureRect(sf::IntRect(0, 1, frameWidth_gun, frameHeight_gun));
+            elapsedTime_gun = 0.f;
         }
 
         // Ограничение границ
