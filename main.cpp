@@ -16,7 +16,7 @@ int main()
 
     sf::Texture texture;
 
-    if (!texture.loadFromFile("Texturs/Run_sheet.png"))
+    if (!texture.loadFromFile("Texturs/Run_sheet.png")) 
     {
         // Если не получилось, выводим ошибку в консоль
         std::cerr << "Error: Could not load texture!" << std::endl;
@@ -55,7 +55,7 @@ int main()
     gun.setPosition(400, 470);
     gun.setOrigin(texture.getSize().x / 2.f - 110, texture.getSize().y / 2.f - 10);
     // Параметры движения
-    float speed = 0.05f;
+    float speed = 0.3f;
     bool isMoving = false;
     bool facingRight = true;
 
