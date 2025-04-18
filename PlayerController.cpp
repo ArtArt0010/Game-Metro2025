@@ -22,6 +22,7 @@ void PlayerController::controllPlayer(Player* player, float time) {
         updated_pos.x -= player_speed * time;
         player->setState(State::RUN);
         player->setDirection(Direction::LEFT);
+
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         updated_pos.x += player_speed * time;

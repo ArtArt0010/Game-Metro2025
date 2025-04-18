@@ -3,7 +3,7 @@ class Player;
 class PlayerController {
 private:
 	PlayerController() = default;
-    float player_speed = 0.3;
+    float player_speed = 0.2;
 	static PlayerController* controller;
 public:
     PlayerController(PlayerController const&) = delete;

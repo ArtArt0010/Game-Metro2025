@@ -2,20 +2,42 @@
 #include "PlayerController.h"
 Player::Player(sf::Texture& texture, sf::Vector2f start_pos, float hp)
 {
+	
 	m_Position = start_pos;
 	m_hp = hp;
 	m_controller = PlayerController::getPlayerController();
 	m_sprite.setTexture(texture);
+	m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+	m_sprite.setScale(4.f, 4.f);
 	m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
+
+	m_frameHeight = 32;
+	m_frameWidth = 32;
+	m_numFrames = 9;
+	m_currentFrame = 0;
+	m_animationSpeed = 0.01f;
+	m_elapsedTime = 0.f;
+
+	bool m_facingRight = Player::getDirection();
+	
 }
 
 Player::~Player(){}
 
 void Player::Update(float time){
+	
+	
 	m_state = State::IDLE;
 	m_controller->controllPlayer(this, time);
 	if (m_state == State::RUN) {
+		m_currentFrame = (m_currentFrame + 1) % m_numFrames;
+		m_sprite.setTextureRect(sf::IntRect(
+			m_currentFrame * m_frameWidth,
+			0,
+			m_facingRight ? m_frameWidth : -m_frameWidth,
+			m_frameHeight));
 
+		time = 0.f;
 	}
 	else {
 

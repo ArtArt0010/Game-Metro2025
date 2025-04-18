@@ -16,7 +16,7 @@ private:
 public:
 	Player() = delete;
 	Player(sf::Texture& texture, sf::Vector2f start_pos, float hp);
-
+	
 	~Player();
 
 	void Update(float time) override;
