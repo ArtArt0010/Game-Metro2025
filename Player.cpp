@@ -15,10 +15,10 @@ Player::Player(sf::Texture& texture, sf::Vector2f start_pos, float hp)
 	m_frameWidth = 32;
 	m_numFrames = 9;
 	m_currentFrame = 0;
-	m_animationSpeed = 0.01f;
+	m_animationSpeed = 0.05f;
 	m_elapsedTime = 0.f;
 
-	bool m_facingRight = Player::getDirection();
+	
 	
 }
 
@@ -29,22 +29,31 @@ void Player::Update(float time){
 	
 	m_state = State::IDLE;
 	m_controller->controllPlayer(this, time);
-	if (m_state == State::RUN) {
-		m_currentFrame = (m_currentFrame + 1) % m_numFrames;
-		m_sprite.setTextureRect(sf::IntRect(
-			m_currentFrame * m_frameWidth,
-			0,
-			m_facingRight ? m_frameWidth : -m_frameWidth,
-			m_frameHeight));
+	bool facingRight = (getDirection() == Direction::RIGHT);
 
-		time = 0.f;
+	if (m_state == State::RUN) {
+		m_elapsedTime += time;
+
+
+		if (m_elapsedTime >= m_animationSpeed) {
+			m_currentFrame = (m_currentFrame + 1) % m_numFrames;
+			m_sprite.setTextureRect(sf::IntRect(
+				m_currentFrame * m_frameWidth,
+				0,
+				facingRight ? m_frameWidth : -m_frameWidth,
+				m_frameHeight));
+			m_elapsedTime = 0.f;
+		}
+		
 	}
 	else {
-
+		m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
 	}
 	m_sprite.setPosition(m_Position);
 
 }
+
+
 void Player::setState(State state) {
 	m_state = state;
 }

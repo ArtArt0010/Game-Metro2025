@@ -29,12 +29,12 @@ int main()
 
 
     // Параметры анимации
-    const int frameWidth = 32;
-    const int frameHeight = 32;
-    const int numFrames = 9;
-    int currentFrame = 0;
-    float animationSpeed = 0.05f;
-    float elapsedTime = 0.f;
+    //const int frameWidth = 32;
+    //const int frameHeight = 32;
+    //const int numFrames = 9;
+    //int currentFrame = 0;
+    //float animationSpeed = 0.05f;
+    //float elapsedTime = 0.f;
 
     // Параметры анимации оружия
    /* const int frameWidth_gun = 96;
@@ -45,10 +45,10 @@ int main()
     float elapsedTime_gun = 0.f;*/
 
     // Настройка спрайта
-    sf::Sprite sprite(texture);
-    sprite.setTextureRect(sf::IntRect(0, 0, frameWidth, frameHeight));
-    sprite.setPosition(300, 400);
-    sprite.setScale(4.f, 4.f); // Увеличим спрайт для лучшей видимости
+    //sf::Sprite sprite(texture);
+    //sprite.setTextureRect(sf::IntRect(0, 0, frameWidth, frameHeight));
+    //sprite.setPosition(300, 400);
+    //sprite.setScale(4.f, 4.f); // Увеличим спрайт для лучшей видимости
 
    /* sf::Sprite gun(texture_gun);
     gun.setTextureRect(sf::IntRect(0, 0, frameWidth_gun, frameHeight_gun));
@@ -56,18 +56,18 @@ int main()
     gun.setPosition(400, 470);
     gun.setOrigin(texture.getSize().x / 2.f - 110, texture.getSize().y / 2.f - 10);*/
     // Параметры движения
-    float speed = 0.3f;
-    bool isMoving = false;
-    bool facingRight = true;
+    //float speed = 0.3f;
+    //bool isMoving = false;
+    //bool facingRight = true;
 
     sf::Clock clock;
 
 
     while (window.isOpen()) {
-        float time = clock.getElapsedTime().asMicroseconds();
+       /* float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
-        time /= 300;
-
+        time /= 300;*/
+        float time = clock.restart().asSeconds();
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
