@@ -15,7 +15,7 @@ Player::Player(sf::Texture& texture, sf::Vector2f start_pos, float hp)
 	m_frameWidth = 32;
 	m_numFrames = 8;
 	m_currentFrame = 0;
-	m_animationSpeed = 0.05f;
+	m_animationSpeed = 0.08f;
 	m_elapsedTime = 0.f;
 
 	
@@ -63,7 +63,12 @@ void Player::Update(float time){
 		
 	}
 	else {
-		m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+		if (facingRight == true) {
+			m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+		}
+		else {
+			m_sprite.setTextureRect(sf::IntRect(0, m_frameWidth, m_frameWidth, m_frameHeight));
+		}
 	}
 	m_sprite.setPosition(m_Position);
 

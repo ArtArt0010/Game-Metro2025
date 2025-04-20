@@ -2,6 +2,7 @@
 #include<iostream>
 #include"Load_Texture.h"
 #include "Player.h"
+#include "Automate.h"
 using namespace std;
 
 int main()
@@ -15,50 +16,9 @@ int main()
     textures::Player_setTextures();
     Player* player = new Player(textures::player_texture, sf::Vector2f(200, 300), 100);
 
-    sf::Texture texture;
+    textures::Automat_texture();
+    Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 500);
 
-    if (!texture.loadFromFile("Texturs/Run_sheet.png")) 
-    {
-        // Если не получилось, выводим ошибку в консоль
-        std::cerr << "Error: Could not load texture!" << std::endl;
-        return 1;
-    }
-
-    sf::Texture texture_gun;
-    texture_gun.loadFromFile("Texturs/Gun_animate.png");
-
-
-    // Параметры анимации
-    //const int frameWidth = 32;
-    //const int frameHeight = 32;
-    //const int numFrames = 9;
-    //int currentFrame = 0;
-    //float animationSpeed = 0.05f;
-    //float elapsedTime = 0.f;
-
-    // Параметры анимации оружия
-   /* const int frameWidth_gun = 96;
-    const int frameHeight_gun = 32;
-    const int numFrames_gun = 5;
-    int currentFrame_gun = 0;
-    float animationSpeed_gun = 0.025f;
-    float elapsedTime_gun = 0.f;*/
-
-    // Настройка спрайта
-    //sf::Sprite sprite(texture);
-    //sprite.setTextureRect(sf::IntRect(0, 0, frameWidth, frameHeight));
-    //sprite.setPosition(300, 400);
-    //sprite.setScale(4.f, 4.f); // Увеличим спрайт для лучшей видимости
-
-   /* sf::Sprite gun(texture_gun);
-    gun.setTextureRect(sf::IntRect(0, 0, frameWidth_gun, frameHeight_gun));
-    gun.setScale(1.5, 1.5);
-    gun.setPosition(400, 470);
-    gun.setOrigin(texture.getSize().x / 2.f - 110, texture.getSize().y / 2.f - 10);*/
-    // Параметры движения
-    //float speed = 0.3f;
-    //bool isMoving = false;
-    //bool facingRight = true;
 
     sf::Clock clock;
 
@@ -76,14 +36,18 @@ int main()
         }
 
         player->Update(time);
+        automat->Update_weapon(time, player, window);
+
 
         window.clear();
 
         window.draw(player->getSprite());
+        window.draw(automat->getSprite());
 
         window.display();
     }
 
     delete player;
+    delete automat;
     return 0;
 }
