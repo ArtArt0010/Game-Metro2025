@@ -31,6 +31,7 @@ public:
 	void setPosition(sf::Vector2f& pos);
 	void setDirection(Direction_weapon direction);
 	void setRotation(float angle);
+	void setOrigen(float x, float y);
 	void setScale(float x, float y);
 
 

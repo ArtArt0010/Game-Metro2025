@@ -7,11 +7,13 @@ Weapon::~Weapon() {}
 void Weapon::setPosition(sf::Vector2f& pos)
 {
 	m_Position_weapon = pos;
+	m_sprite_weapon.setPosition(pos);
 }
 
 void Weapon::setDirection(Direction_weapon direction)
 {
 	m_direction_weapon = direction;
+
 }
 
 int Weapon::getCartridges() const
@@ -42,8 +44,14 @@ void Weapon::setRotation(float angle) {
 	m_sprite_weapon.setRotation(angle);
 }
 
+void Weapon::setOrigen(float x, float y)
+{
+	m_sprite_weapon.setOrigin(x, y);
+}
+
 void Weapon::setScale(float x, float y) {
 	m_sprite_weapon.setScale(x, y);
+	
 }
 
 

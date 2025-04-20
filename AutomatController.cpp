@@ -17,9 +17,15 @@ AutomatController* AutomatController::getAutomatController() {
 
 void AutomatController::controllAutomat(Automat* automat, Player* player, sf::RenderWindow& window, float time) {
     //привязка автомата к игроку
+
+    automat->setOrigen(automat->getSize().x / 2.f, automat->getSize().y / 2.f);
+
     sf::Vector2f playerPos = player->getPosition();
-    playerPos.x += 50.f;
-    playerPos.x += 40.f;
+
+
+
+    playerPos.x += 60.f;
+    playerPos.y += 80.f;
 
     automat->setPosition(playerPos);
 
@@ -38,11 +44,11 @@ void AutomatController::controllAutomat(Automat* automat, Player* player, sf::Re
 
     if (dir_player == Direction::LEFT) {
         angel_grad += 180.f;
-        automat->setScale(-1.5f, 1.5f);
+        automat->setScale(-3.f, 3.f);
         automat->setDirection(Direction_weapon::LEFT);
     }
     else {
-        automat->setScale(1.5f, 1.5f);
+        automat->setScale(3.f, 3.f);
         automat->setDirection(Direction_weapon::RIGHT);
     }
 

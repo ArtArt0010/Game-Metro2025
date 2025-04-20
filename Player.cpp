@@ -8,7 +8,7 @@ Player::Player(sf::Texture& texture, sf::Vector2f start_pos, float hp)
 	m_controller = PlayerController::getPlayerController();
 	m_sprite.setTexture(texture);
 	m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
-	m_sprite.setScale(5.f, 5.f);
+	m_sprite.setScale(4.f, 4.f);
 	m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
 
 	m_frameHeight = 32;

@@ -3,11 +3,11 @@
 
 Automat::Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges)
 {
-	m_frameHeight_w = 32;
-	m_frameWidth_w = 16;
-	m_numFrames_w = 8;
+	m_frameHeight_w = 16;
+	m_frameWidth_w = 32;
+	m_numFrames_w = 5;
 	m_currentFrame_w = 0;
-	m_animationSpeed_w = 0.08f;
+	m_animationSpeed_w = 0.05f;
 	m_elapsedTime_w = 0.f;
 
 	m_Position_weapon = start_pos;
@@ -30,6 +30,7 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 	m_state = State_w::STOP;
 	m_controller->controllAutomat(this, player, window, time);
 
+	
 	m_elapsedTime_w += time;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 		m_state = State_w::SHOOTING;
