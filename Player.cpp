@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "PlayerController.h"
+#include "Weapon.h"
 Player::Player(sf::Texture& texture, sf::Vector2f start_pos, float hp)
 {
 	
@@ -25,6 +26,7 @@ Player::Player(sf::Texture& texture, sf::Vector2f start_pos, float hp)
 Player::~Player(){}
 
 void Player::Update(float time){
+	
 	
 	
 	m_state = State::IDLE;
@@ -73,6 +75,8 @@ void Player::Update(float time){
 	m_sprite.setPosition(m_Position);
 
 }
+
+
 
 
 void Player::setState(State state) {

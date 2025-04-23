@@ -1,7 +1,6 @@
 #include "Automat_Controller.h"
 #include "Automate.h"
-
-
+#include <iostream>
 
 
 AutomatController* AutomatController::controller = nullptr;
@@ -42,14 +41,26 @@ void AutomatController::controllAutomat(Automat* automat, Player* player, sf::Re
     float angel_grad = angle * 180 / 3.14159265f;
 
 
+    //поворот персонажа в зависимости от поворота автомата
+    if ((angel_grad > -90.f && angel_grad < 90.f)) {
+        automat->setDirection(Direction_weapon::RIGHT);
+        player->setDirection(Direction::RIGHT);
+    }
+    else {
+        automat->setDirection(Direction_weapon::LEFT);
+        player->setDirection(Direction::LEFT);
+    }
+
     if (dir_player == Direction::LEFT) {
         angel_grad += 180.f;
         automat->setScale(-3.f, 3.f);
         automat->setDirection(Direction_weapon::LEFT);
+        
     }
     else {
         automat->setScale(3.f, 3.f);
         automat->setDirection(Direction_weapon::RIGHT);
+        
     }
 
     automat->setRotation(angel_grad);

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "PlayerController.h"
 
+
 PlayerController* PlayerController::controller = nullptr;
 
 PlayerController::~PlayerController() {
@@ -17,6 +18,8 @@ PlayerController* PlayerController::getPlayerController() {
 
 void PlayerController::controllPlayer(Player* player, float time) {
     sf::Vector2f updated_pos = player->getPosition();
+
+    
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         updated_pos.x -= player_speed;
