@@ -1,5 +1,7 @@
 #include "Automate.h"
 #include "Automat_Controller.h"
+#include "Bullet.h"
+#include <SFML/Graphics.hpp>
 
 Automat::Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges)
 {
@@ -47,7 +49,12 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 		}
 
 
-
+		sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+		sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
+		sf::Vector2f direction = worldPos - m_Position_weapon;
+		Bullet bull(getPosition(), direction);
+		bull.Update(time);
+		bull.draw(window); ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	}
 	else
 	{
