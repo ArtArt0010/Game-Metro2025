@@ -17,7 +17,7 @@ namespace textures {
     sf::Texture bullet_texture;
 
     static void Bullet_texture() {
-        bullet_texture.loadFromFile("Texturs/Automate.png");
+        bullet_texture.loadFromFile("Texturs/Bullet2.png");
 
     }
 

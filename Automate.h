@@ -23,6 +23,6 @@ public:
 	void Update_weapon(float time, Player* player, sf::RenderWindow& window) override;
 	void setState(State_w state);
 
-
+	State_w getState();
 
 };

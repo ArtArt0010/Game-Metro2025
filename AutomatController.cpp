@@ -40,7 +40,7 @@ void AutomatController::controllAutomat(Automat* automat, Player* player, sf::Re
     float angle = atan2(direction.y, direction.x);
     float angel_grad = angle * 180 / 3.14159265f;
 
-
+    automat->setDirectionMause(direction);
     //поворот персонажа в зависимости от поворота автомата
     if ((angel_grad > -90.f && angel_grad < 90.f)) {
         automat->setDirection(Direction_weapon::RIGHT);

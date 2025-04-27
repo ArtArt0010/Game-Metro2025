@@ -14,7 +14,7 @@ protected:
 	sf::Vector2f m_Position_weapon;
 	sf::Sprite m_sprite_weapon;
 	Direction_weapon    m_direction_weapon = Direction_weapon::RIGHT;
-
+	sf::Vector2f direction_mause;
 	//настройки анимации
 	int m_frameWidth_w;
 	int m_frameHeight_w;
@@ -33,13 +33,13 @@ public:
 	void setRotation(float angle);
 	void setOrigen(float x, float y);
 	void setScale(float x, float y);
-
+	void setDirectionMause(sf::Vector2f& dirM);
 
 	int getCartridges() const;
 	sf::Vector2f getSize() const;
 	sf::Vector2f getPosition() const;
 	sf::Sprite getSprite() const;
-
+	sf::Vector2f getDirectionMausse()const;
 
 	Direction_weapon getDirection() const;
 

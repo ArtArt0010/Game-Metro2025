@@ -36,6 +36,11 @@ sf::Sprite Weapon::getSprite() const
 	return m_sprite_weapon;
 }
 
+sf::Vector2f Weapon::getDirectionMausse() const
+{
+	return direction_mause;
+}
+
 Direction_weapon Weapon::getDirection() const
 {
 	return m_direction_weapon;
@@ -52,6 +57,11 @@ void Weapon::setOrigen(float x, float y)
 void Weapon::setScale(float x, float y) {
 	m_sprite_weapon.setScale(x, y);
 	
+}
+
+void Weapon::setDirectionMause(sf::Vector2f& dirM)
+{
+	direction_mause = dirM;
 }
 
 

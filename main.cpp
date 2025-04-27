@@ -3,6 +3,7 @@
 #include"Load_Texture.h"
 #include "Player.h"
 #include "Automate.h"
+#include "Bullet.h"
 using namespace std;
 
 int main()
@@ -19,6 +20,10 @@ int main()
     textures::Automat_texture();
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 500);
 
+    textures::Bullet_texture();
+
+    Bullet* bullet = nullptr;
+    
 
     sf::Clock clock;
 
@@ -38,12 +43,29 @@ int main()
         player->Update(time);
         automat->Update_weapon(time, player, window);
 
+        if (automat->getState() == State_w::SHOOTING && bullet == nullptr) {
+            bullet = new Bullet(textures::bullet_texture, automat->getPosition(), automat->getDirectionMausse());
+            bullet->Update(time);
+        }
+       
+        if (bullet) {
+            bullet->Update(time);
+            /*if (!bullet->isAlive()) {
+                delete bullet;
+                bullet = nullptr;
+            }*/
+        }
+
 
         window.clear();
 
+        if (bullet) {
+            window.draw(bullet->getSprite());
+        }
+
         window.draw(player->getSprite());
         window.draw(automat->getSprite());
-
+        
         window.display();
     }
 
