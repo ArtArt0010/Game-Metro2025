@@ -5,6 +5,7 @@
 
 Automat::Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges)
 {
+	
 	m_frameHeight_w = 16;
 	m_frameWidth_w = 32;
 	m_numFrames_w = 5;
@@ -34,7 +35,7 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 
 	
 	m_elapsedTime_w += time;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && getCartridges() != 0){
 		m_state = State_w::SHOOTING;
 		if (m_elapsedTime_w >= m_animationSpeed_w) {
 			m_currentFrame_w = (m_currentFrame_w + 1) % m_numFrames_w;
@@ -49,10 +50,7 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 		}
 
 
-	/*	sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
-		sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);
-		sf::Vector2f direction = worldPos - m_Position_weapon;
-		*/
+	
 	}
 	else
 	{
@@ -61,7 +59,14 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 		m_sprite_weapon.setTextureRect(sf::IntRect(0, 0, m_frameWidth_w, m_frameHeight_w));
 		m_elapsedTime_w = 0.f;
 	}
+
+
+	//if (getCartridges() == 0) {//перезарядка, но нужно доделать!!!
+	//	setCartriges(30);
+	//}
 }
+
+
 
 void Automat::setState(State_w state)
 {

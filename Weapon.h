@@ -34,6 +34,7 @@ public:
 	void setOrigen(float x, float y);
 	void setScale(float x, float y);
 	void setDirectionMause(sf::Vector2f& dirM);
+	void setCartriges(int crt);
 
 	int getCartridges() const;
 	sf::Vector2f getSize() const;

@@ -7,8 +7,8 @@ private:
 	sf::Vector2f m_direction;
 	int m_damage;
 	sf::Vector2f m_pos;
-	float speed = 500.f;
-	float lifeTime = 5;
+	float speed = 1000.f;
+	float lifeTime = 40;
 
 public:
 

@@ -24,6 +24,7 @@ void Bullet::Update(float time)
 
 	m_sprite_obj.setPosition(m_pos);
 	m_sprite_obj.setScale(0.8, 0.8);
+	lifeTime -= 0.01;
 }
 
 void Bullet::updateDamage()

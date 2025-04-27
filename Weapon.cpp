@@ -64,4 +64,9 @@ void Weapon::setDirectionMause(sf::Vector2f& dirM)
 	direction_mause = dirM;
 }
 
+void Weapon::setCartriges(int crt)
+{
+	m_cartridges = crt;
+}
+
 

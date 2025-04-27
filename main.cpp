@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Automate.h"
 #include "Bullet.h"
+#include<vector>
 using namespace std;
 
 int main()
@@ -18,12 +19,13 @@ int main()
     Player* player = new Player(textures::player_texture, sf::Vector2f(200, 300), 100);
 
     textures::Automat_texture();
-    Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 500);
+    Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
     textures::Bullet_texture();
 
-    Bullet* bullet = nullptr;
-    
+    vector<Bullet> bullets;
+    float fireCooldown = 0.f;
+    float fireRate = 0.2f;
 
     sf::Clock clock;
 
@@ -43,24 +45,32 @@ int main()
         player->Update(time);
         automat->Update_weapon(time, player, window);
 
-        if (automat->getState() == State_w::SHOOTING && bullet == nullptr) {
-            bullet = new Bullet(textures::bullet_texture, automat->getPosition(), automat->getDirectionMausse());
-            bullet->Update(time);
+
+        fireCooldown -= time;
+        if (automat->getState() == State_w::SHOOTING && automat->getCartridges() != 0) {
+            if (fireCooldown <= 0.f) {
+                bullets.emplace_back(textures::bullet_texture, automat->getPosition(), automat->getDirectionMausse());
+                fireCooldown = fireRate;
+                automat->setCartriges(automat->getCartridges() - 1);
+            }
+
         }
        
-        if (bullet) {
-            bullet->Update(time);
-            /*if (!bullet->isAlive()) {
-                delete bullet;
-                bullet = nullptr;
-            }*/
+        for (int i = 0; i < bullets.size(); ) {
+            bullets[i].Update(time);
+            if (!bullets[i].isAlife()) {
+                bullets.erase(bullets.begin() + i);
+            }
+            else {
+                ++i;
+            }
         }
 
 
         window.clear();
 
-        if (bullet) {
-            window.draw(bullet->getSprite());
+        for (auto & bullet : bullets) {
+            window.draw(bullet.getSprite());
         }
 
         window.draw(player->getSprite());
