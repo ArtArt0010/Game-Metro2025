@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "PlayerController.h"
 #include "Weapon.h"
-Player::Player(sf::Texture& texture, sf::Vector2f start_pos, float hp)
+Player::Player(sf::Texture& texture, sf::Vector2f start_pos, int hp)
 {
 	
 	m_Position = start_pos;

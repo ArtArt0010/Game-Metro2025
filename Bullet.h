@@ -7,7 +7,7 @@ private:
 	sf::Vector2f m_direction;
 	int m_damage;
 	sf::Vector2f m_pos;
-	float speed = 1000.f;
+	float speed = 1000;
 	float lifeTime = 40;
 
 public:

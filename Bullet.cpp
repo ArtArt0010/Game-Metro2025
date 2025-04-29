@@ -14,6 +14,7 @@ Bullet::Bullet(sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction)
 	m_pos.x = pos.x;
 	m_pos.y = pos.y - 9;
 
+
 	m_damage = 5;
 }
 
