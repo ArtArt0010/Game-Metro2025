@@ -21,4 +21,10 @@ namespace textures {
 
     }
 
+    sf::Texture enemy_texture;
+    static void Enemy_texture() {
+        enemy_texture.loadFromFile("Texturs/Personag_big.png");
+
+    }
+
 }

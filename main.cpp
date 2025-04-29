@@ -5,6 +5,7 @@
 #include "Automate.h"
 #include "Bullet.h"
 #include<vector>
+#include "Enemy.h"
 using namespace std;
 
 int main()
@@ -20,6 +21,8 @@ int main()
 
     textures::Automat_texture();
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
+
+    
 
     textures::Bullet_texture();
 
