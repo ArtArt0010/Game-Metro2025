@@ -1,12 +1,12 @@
 #include"Enemy.h"
 //#include"EnemyManager.h"
-
+#include"iostream"
 
 Enemy::Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp)
 {
 	m_Position = start_pos;
 	m_hp = hp;
-	m_speed = 100;
+	m_speed = 200;
 
 
 	m_frameHeight = 32;
@@ -58,4 +58,14 @@ void Enemy::setPlayerPosition(sf::Vector2f& player_pos)
 bool Enemy::isDead() const
 {
 	return m_hp <= 0;
+}
+
+bool Enemy::isIntersection(const sf::Sprite& bull)
+{
+	if (m_sprite.getGlobalBounds().intersects(bull.getGlobalBounds())) {
+		std::cout << 1;
+		return true;
+	}
+
+	return false;
 }

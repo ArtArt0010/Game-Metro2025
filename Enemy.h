@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Character.h"
-
+//#include "Bullet.h"
 //class EnemyManager;
 
 
@@ -27,4 +27,5 @@ public:
 
 	bool isDead() const;
 
+	bool isIntersection(const sf::Sprite& bull);
 };

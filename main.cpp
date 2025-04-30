@@ -23,7 +23,7 @@ int main()
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
     textures::Enemy_texture();
-    Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(300, 300), 10);
+    Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(500, 300), 10);
     
 
     textures::Bullet_texture();
@@ -65,14 +65,22 @@ int main()
        
         for (int i = 0; i < bullets.size(); ) {
             bullets[i].Update(time);
+            if (enemy->isIntersection(bullets[i].getSprite())) {
+                enemy->takeDamage(bullets[i].m_damage);
+              // bullets[i]
+                
+            }
             if (!bullets[i].isAlife()) {
                 bullets.erase(bullets.begin() + i);
+
             }
             else {
                 ++i;
+
             }
         }
 
+        
 
         window.clear();
 
@@ -84,6 +92,7 @@ int main()
         window.draw(automat->getSprite());
         window.draw(enemy->getSprite());
 
+        
 
         window.display();
     }
