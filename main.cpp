@@ -22,6 +22,8 @@ int main()
     textures::Automat_texture();
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
+    textures::Enemy_texture();
+    Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(300, 300), 10);
     
 
     textures::Bullet_texture();
@@ -32,7 +34,7 @@ int main()
 
     sf::Clock clock;
 
-
+    
     while (window.isOpen()) {
        /* float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
@@ -47,7 +49,9 @@ int main()
 
         player->Update(time);
         automat->Update_weapon(time, player, window);
-
+        sf::Vector2f p = player->getPosition();
+        enemy->setPlayerPosition(p);
+        enemy->Update(time);
 
         fireCooldown -= time;
         if (automat->getState() == State_w::SHOOTING && automat->getCartridges() != 0) {
@@ -78,11 +82,14 @@ int main()
 
         window.draw(player->getSprite());
         window.draw(automat->getSprite());
-        
+        window.draw(enemy->getSprite());
+
+
         window.display();
     }
 
     delete player;
     delete automat;
+    delete enemy;
     return 0;
 }

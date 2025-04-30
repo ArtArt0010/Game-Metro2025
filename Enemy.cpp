@@ -8,10 +8,6 @@ Enemy::Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp)
 	m_hp = hp;
 	m_speed = 100;
 
-	m_sprite.setTexture(texture);
-	m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
-	m_sprite.setScale(4.f, 4.f);
-	m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
 
 	m_frameHeight = 32;
 	m_frameWidth = 32;
@@ -20,6 +16,12 @@ Enemy::Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp)
 	m_animationSpeed = 0.08f;
 	m_elapsedTime = 0.f;
 
+
+
+	m_sprite.setTexture(texture);
+	m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+	m_sprite.setScale(4.f, 4.f);
+	m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
 	
 }
 
@@ -29,13 +31,14 @@ void Enemy::Update(float time)
 {
 	sf::Vector2f dir = PlayerPosition - m_Position;
 	float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-	if (len != 0.f)
-		dir /= len;
+	if (len > 0.5) {
+		if (len != 0.f)
+			dir /= len;
 
-	m_Position += dir * m_speed * time;
-	m_sprite.setPosition(m_Position);
+		m_Position += dir * m_speed * time;
+		m_sprite.setPosition(m_Position);
+	}
 
-	m_sprite.move(dir * m_speed * time);
 }
 
 void Enemy::takeDamage(int dmg)

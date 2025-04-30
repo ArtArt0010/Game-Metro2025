@@ -2,14 +2,14 @@
 
 #include "Character.h"
 
-class EnemyManager;
+//class EnemyManager;
 
 
 
 class Enemy : public Character {
 private:
 	
-	EnemyManager* m_EnemyManager;
+	//EnemyManager* m_EnemyManager;
 	int my_damage = 5;
 	sf::Vector2f PlayerPosition;
 

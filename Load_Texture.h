@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 namespace textures {
     sf::Texture player_texture;
 
@@ -23,8 +24,10 @@ namespace textures {
 
     sf::Texture enemy_texture;
     static void Enemy_texture() {
-        enemy_texture.loadFromFile("Texturs/Personag_big.png");
-
+        enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png");
+       /* if (!enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png")) {
+            std::cout << "No";
+        }*/
     }
 
 }
