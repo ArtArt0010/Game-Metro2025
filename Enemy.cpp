@@ -31,7 +31,7 @@ void Enemy::Update(float time)
 {
 	sf::Vector2f dir = PlayerPosition - m_Position;
 	float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-	if (len > 0.5) {
+	if (len < 300.f) {
 		if (len != 0.f)
 			dir /= len;
 
