@@ -149,13 +149,13 @@ void Enemy::ataka(float time)
 {
 	
 	//слева от игрока
-	if (m_Position.x > PlayerPosition.x) {
+ {
 
 		m_elapsedTime += time;
 
 
-		if (m_elapsedTime >= m_animationSpeed) {
-			m_currentFrame = (m_currentFrame + 1) % m_numFrames;
+		if (m_elapsedTime >= 0.08) {
+			m_currentFrame = (m_currentFrame + 1) % 4;
 			m_sprite.setTextureRect(sf::IntRect(
 				m_currentFrame * m_frameWidth,
 				3*m_frameWidth,
@@ -165,22 +165,9 @@ void Enemy::ataka(float time)
 		}
 
 	}
-	//справа от игрока
-	else {
-		m_elapsedTime += time;
+	
 
-
-		if (m_elapsedTime >= m_animationSpeed) {
-			m_currentFrame = (m_currentFrame + 1) % m_numFrames;
-			m_sprite.setTextureRect(sf::IntRect(
-				m_currentFrame * m_frameWidth,
-				2*m_frameWidth,
-				m_frameWidth,
-				m_frameHeight));
-			m_elapsedTime = 0.f;
-		}
-
-	}
+	
 
 
 }
