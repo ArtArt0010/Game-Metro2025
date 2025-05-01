@@ -82,3 +82,4 @@ void Player::Update(float time){
 void Player::setState(State state) {
 	m_state = state;
 }
+

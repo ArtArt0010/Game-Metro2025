@@ -24,7 +24,7 @@ namespace textures {
 
     sf::Texture enemy_texture;
     static void Enemy_texture() {
-        enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png");
+        enemy_texture.loadFromFile("Texturs/Mutant1_sprite_sheet.png");
        /* if (!enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png")) {
             std::cout << "No";
         }*/

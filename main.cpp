@@ -23,7 +23,7 @@ int main()
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
     textures::Enemy_texture();
-    Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(500, 300), 10);
+    Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(500, 300), 50);
     
 
     textures::Bullet_texture();
@@ -63,24 +63,46 @@ int main()
 
         }
        
+        //for (int i = 0; i < bullets.size(); ) {
+        //    bullets[i].Update(time);
+        //    if (enemy->isIntersection(bullets[i].getSprite())) {
+        //        enemy->takeDamage(bullets[i].m_damage);
+        //      // bullets[i]
+        //        
+        //    }
+        //    if (!bullets[i].isAlife()) {
+        //        bullets.erase(bullets.begin() + i);
+
+        //    }
+        //    else {
+        //        ++i;
+
+        //    }
+        //}
+
         for (int i = 0; i < bullets.size(); ) {
             bullets[i].Update(time);
-            if (enemy->isIntersection(bullets[i].getSprite())) {
+
+            if (enemy && enemy->isIntersection(bullets[i].getSprite())) {
                 enemy->takeDamage(bullets[i].m_damage);
-              // bullets[i]
-                
+                bullets.erase(bullets.begin() + i);
+                continue;
             }
+
             if (!bullets[i].isAlife()) {
                 bullets.erase(bullets.begin() + i);
-
             }
             else {
                 ++i;
-
             }
         }
 
-        
+
+        if (enemy && enemy->isIntersection(player->getSprite())) {
+            enemy->ataka(time);
+            player->take_Damage(enemy->my_damage);
+
+        }
 
         window.clear();
 
