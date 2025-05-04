@@ -6,7 +6,7 @@ Enemy::Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp)
 {
 	m_Position = start_pos;
 	m_hp = hp;
-	m_speed = 200;
+	m_speed = 250;
 
 
 	m_frameHeight = 32;
@@ -30,7 +30,50 @@ Enemy::~Enemy(){}
 
 void Enemy::Update(float time)
 {
-	if (!isDead()) {
+	if (Ataka) {
+
+		if (m_Position.x > PlayerPosition.x) {
+			timerAtaka -= time;
+
+			m_elapsedTime += time;
+			if (m_elapsedTime >= 0.1) {
+				m_currentFrame = (m_currentFrame + 1) % 4;
+				m_sprite.setTextureRect(sf::IntRect(
+					m_currentFrame * m_frameWidth,
+					2 * m_frameWidth,
+					m_frameWidth,
+					m_frameHeight));
+				m_elapsedTime = 0.f;
+			}
+
+			if (timerAtaka <= 0.f) {
+				Ataka = false; 
+			}
+
+			return;
+		}
+		else {
+			timerAtaka -= time;
+
+			m_elapsedTime += time;
+			if (m_elapsedTime >= 0.1) {
+				m_currentFrame = (m_currentFrame + 1) % 4;
+				m_sprite.setTextureRect(sf::IntRect(
+					m_currentFrame * m_frameWidth,
+					3 * m_frameWidth,
+					m_frameWidth,
+					m_frameHeight));
+				m_elapsedTime = 0.f;
+			}
+
+			if (timerAtaka <= 0.f) {
+				Ataka = false; 
+			}
+
+			return;
+		}
+	}
+	if (!isDead() && !Ataka) {
 
 
 
@@ -145,30 +188,30 @@ void Enemy::takeDamage(int dmg)
 	
 }
 
-void Enemy::ataka(float time)
+void Enemy::ataka(float time, Player* player)
 {
+	if (isDead()) return;
 	
-	//слева от игрока
- {
+	sf::Vector2f dir = PlayerPosition - m_Position;
+	float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
+	if (len < 30.f) {
+		if (len != 0.f)
+			dir /= len;
+	
+	
+			if (timerAtaka <= 0) {
+				player->take_Damage(my_damage);
+				timerAtaka = AtakaDelay;
+				m_currentFrame = 0;
+				m_elapsedTime = 0.f;
 
-		m_elapsedTime += time;
+				Ataka = true;
 
 
-		if (m_elapsedTime >= 0.08) {
-			m_currentFrame = (m_currentFrame + 1) % 4;
-			m_sprite.setTextureRect(sf::IntRect(
-				m_currentFrame * m_frameWidth,
-				3*m_frameWidth,
-				m_frameWidth,
-				m_frameHeight));
-			m_elapsedTime = 0.f;
+			
 		}
 
 	}
-	
-
-	
-
 
 }
 

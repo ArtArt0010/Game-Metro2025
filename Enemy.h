@@ -4,13 +4,14 @@
 //#include "Bullet.h"
 //class EnemyManager;
 
-
+#include"Player.h"
 
 class Enemy : public Character {
 private:
 	
 
-
+	float timerAtaka = 0.f;
+	float AtakaDelay = 0.8;
 	sf::Vector2f PlayerPosition;
 	bool Dead_animation = false;
 
@@ -25,7 +26,7 @@ public:
 
 	void Update(float time) override;
 	void takeDamage(int dmg);
-	void ataka(float time);
+	void ataka(float time, Player* player);
 
 	void setPlayerPosition(sf::Vector2f& player_pos);
 

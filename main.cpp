@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
 
-    
+    float timerDead = 5.0;
 
 
     sf::RenderWindow window(sf::VideoMode(900, 800), "SFML works!");
@@ -39,6 +39,7 @@ int main()
        /* float time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
         time /= 300;*/
+ 
         float time = clock.restart().asSeconds();
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -47,8 +48,12 @@ int main()
             }
         }
 
+        
         player->Update(time);
         automat->Update_weapon(time, player, window);
+
+
+        enemy->ataka(time, player);
         sf::Vector2f p = player->getPosition();
         enemy->setPlayerPosition(p);
         enemy->Update(time);
@@ -63,22 +68,7 @@ int main()
 
         }
        
-        //for (int i = 0; i < bullets.size(); ) {
-        //    bullets[i].Update(time);
-        //    if (enemy->isIntersection(bullets[i].getSprite())) {
-        //        enemy->takeDamage(bullets[i].m_damage);
-        //      // bullets[i]
-        //        
-        //    }
-        //    if (!bullets[i].isAlife()) {
-        //        bullets.erase(bullets.begin() + i);
 
-        //    }
-        //    else {
-        //        ++i;
-
-        //    }
-        //}
 
         for (int i = 0; i < bullets.size(); ) {
             bullets[i].Update(time);
@@ -96,14 +86,10 @@ int main()
                 ++i;
             }
         }
-
-
-        if (enemy && enemy->isIntersection(player->getSprite())) {
-            enemy->ataka(time);
-            player->take_Damage(enemy->my_damage);
-
-        }
-
+        
+       
+        
+  
         window.clear();
 
         for (auto & bullet : bullets) {
@@ -114,11 +100,11 @@ int main()
         window.draw(automat->getSprite());
         window.draw(enemy->getSprite());
 
-        
+      
 
         window.display();
     }
-
+   
     delete player;
     delete automat;
     delete enemy;
