@@ -61,9 +61,13 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 	}
 
 
-	//if (getCartridges() == 0) {//перезарядка, но нужно доделать!!!
-	//	setCartriges(30);
-	//}
+	if (getCartridges() == 0 && player->count_cartrige != 0) {//перезарядка, но нужно доделать!!!
+		timeReload -= time;
+		if (timeReload <= 0) {
+			player->count_cartrige -= 1;
+			setCartriges(30);
+		}
+	}
 }
 
 

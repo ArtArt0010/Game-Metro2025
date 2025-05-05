@@ -30,4 +30,12 @@ namespace textures {
         }*/
     }
 
+    sf::Texture cartrige_texture;
+    static void Cartrige_texture() {
+        cartrige_texture.loadFromFile("Texturs/Cartriges.png");
+        /* if (!enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png")) {
+             std::cout << "No";
+         }*/
+    }
+
 }

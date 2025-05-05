@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include<vector>
 #include "Enemy.h"
+#include "Cartrige.h"
 using namespace std;
 
 int main()
@@ -25,12 +26,18 @@ int main()
     textures::Enemy_texture();
     Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(500, 300), 50);
     
+    textures::Cartrige_texture();
+    
 
     textures::Bullet_texture();
 
     vector<Bullet> bullets;
     float fireCooldown = 0.f;
     float fireRate = 0.2f;
+
+    vector<Cartriges> cartrige;
+    cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(600, 400));
+    cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(400, 200));
 
     sf::Clock clock;
 
@@ -51,12 +58,13 @@ int main()
         
         player->Update(time);
         automat->Update_weapon(time, player, window);
-
+        
 
         enemy->ataka(time, player);
         sf::Vector2f p = player->getPosition();
         enemy->setPlayerPosition(p);
         enemy->Update(time);
+        
 
         fireCooldown -= time;
         if (automat->getState() == State_w::SHOOTING && automat->getCartridges() != 0) {
@@ -68,7 +76,15 @@ int main()
 
         }
        
-
+        for (int i = 0; i < cartrige.size(); ) {
+            cartrige[i].CartrigeReload(player);
+            if (!cartrige[i].flag_crt) {
+                cartrige.erase(cartrige.begin() + i);
+            }
+            else {
+                ++i;
+            }
+        }
 
         for (int i = 0; i < bullets.size(); ) {
             bullets[i].Update(time);
@@ -95,16 +111,19 @@ int main()
         for (auto & bullet : bullets) {
             window.draw(bullet.getSprite());
         }
+        for (auto& crt : cartrige) {
+            window.draw(crt.getSprite());
+        }
 
         window.draw(player->getSprite());
         window.draw(automat->getSprite());
         window.draw(enemy->getSprite());
-
+        
       
 
         window.display();
     }
-   
+    
     delete player;
     delete automat;
     delete enemy;

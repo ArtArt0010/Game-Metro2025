@@ -13,6 +13,7 @@ class Automat : public Weapon {
 private:
 	State_w m_state;
 	AutomatController* m_controller;
+	float timeReload = 2.f;
 
 public:
 	Automat() = delete;
