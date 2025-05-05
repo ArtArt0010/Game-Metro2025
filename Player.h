@@ -14,6 +14,7 @@ private:
 	PlayerController* m_controller;
 
 public:
+	int count_cartrige = 1;
 	Player() = delete;
 	Player(sf::Texture& texture, sf::Vector2f start_pos, int hp);
 	
@@ -21,6 +22,9 @@ public:
 
 	void Update(float time) override;
 	void setState(State state);
+
+	void setCountCartrige(int c_cartrige);
+	int getCountCartrige();
 	
 
 };

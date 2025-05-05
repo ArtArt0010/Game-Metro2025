@@ -83,3 +83,13 @@ void Player::setState(State state) {
 	m_state = state;
 }
 
+void Player::setCountCartrige(int c_cartrige)
+{
+	count_cartrige += c_cartrige;
+}
+
+int Player::getCountCartrige()
+{
+	return count_cartrige;
+}
+

@@ -134,6 +134,7 @@
     <ClCompile Include="AutomatController.cpp" />
     <ClCompile Include="Automate.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Cartrige.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GamrObject.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Automate.h" />
     <ClInclude Include="Automat_Controller.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Cartrige.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameObject.h" />
