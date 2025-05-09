@@ -19,15 +19,22 @@ void LevelLoad(const std::string& filename, sf::Texture& tileTexture, std::vecto
 
             sf::Sprite tile;
             tile.setTexture(tileTexture);
-            if (ch == ' ') {
+
+            switch (ch)
+            {
+            case ' ':
                 tile.setTextureRect(sf::IntRect(0, 0, 32, 32));
-            }
-            else if (ch == '0') {
+                break;
+            case '0':
                 tile.setTextureRect(sf::IntRect(64, 0, 32, 32));
-            }
-            else if (ch == '1') {
+                break;
+            case '1':
                 tile.setTextureRect(sf::IntRect(32, 0, 32, 32));
+                break;
+            default:
+                break;
             }
+     
 
             tile.setPosition(pos);
            tile.setScale(2, 2);
