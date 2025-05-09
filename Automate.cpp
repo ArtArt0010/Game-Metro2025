@@ -18,7 +18,7 @@ Automat::Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges)
 	m_controller = AutomatController::getAutomatController();
 	m_sprite_weapon.setTexture(texture);
 	m_sprite_weapon.setTextureRect(sf::IntRect(0, 0, m_frameWidth_w, m_frameHeight_w));
-	m_sprite_weapon.setScale(8.f, 8.f);
+	m_sprite_weapon.setScale(6.5, 6.5);
 	m_size_weapon = sf::Vector2f(m_sprite_weapon.getTextureRect().width, m_sprite_weapon.getTextureRect().height);
 
 	

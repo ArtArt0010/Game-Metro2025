@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{83471771-8b4b-49d9-8ffe-87741e39ca1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,6 +49,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Cartrige.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoad.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -94,6 +100,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Cartrige.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoad.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

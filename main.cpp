@@ -7,6 +7,8 @@
 #include<vector>
 #include "Enemy.h"
 #include "Cartrige.h"
+#include "View.h"
+#include "LevelLoad.h"
 using namespace std;
 
 int main()
@@ -15,7 +17,13 @@ int main()
     float timerDead = 5.0;
 
 
-    sf::RenderWindow window(sf::VideoMode(900, 800), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(1000, 900), "SFML works!");
+
+    view.reset(sf::FloatRect(0, 0, 1000, 900));
+
+    textures::Level_texture();
+    std::vector<sf::Sprite> levelTiles;
+    LevelLoad("Levels/level_1.txt", textures::level_texture, levelTiles);
 
     textures::Player_setTextures();
     Player* player = new Player(textures::player_texture, sf::Vector2f(200, 300), 100);
@@ -55,8 +63,10 @@ int main()
             }
         }
 
+
         
         player->Update(time);
+        getCameraPosition(player->getPosition());
         automat->Update_weapon(time, player, window);
         
 
@@ -105,8 +115,12 @@ int main()
         
        
         
-  
+        window.setView(view);
         window.clear();
+       
+        for (auto& tile : levelTiles) {
+            window.draw(tile);
+        }
 
         for (auto & bullet : bullets) {
             window.draw(bullet.getSprite());

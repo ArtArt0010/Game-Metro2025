@@ -23,8 +23,8 @@ void AutomatController::controllAutomat(Automat* automat, Player* player, sf::Re
 
 
 
-    playerPos.x += 60.f;
-    playerPos.y += 80.f;
+    playerPos.x += 50.f;
+    playerPos.y += 70.f;
 
     automat->setPosition(playerPos);
 

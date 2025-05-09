@@ -37,5 +37,11 @@ namespace textures {
              std::cout << "No";
          }*/
     }
-
+    sf::Texture level_texture;
+    static void Level_texture() {
+        level_texture.loadFromFile("Texturs/MapTexture.png");
+        /* if (!enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png")) {
+             std::cout << "No";
+         }*/
+    }
 }
