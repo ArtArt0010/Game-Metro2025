@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "PlayerController.h"
 #include "Weapon.h"
+//#include <iostream>
 Player::Player(sf::Texture& texture, sf::Vector2f start_pos, int hp)
 {
 	
@@ -145,6 +146,8 @@ void Player::restrictions()
 void Player::setCountCartrige(int c_cartrige)
 {
 	count_cartrige += c_cartrige;
+	//std::cout << count_cartrige << " ";
+
 }
 
 int Player::getCountCartrige()
