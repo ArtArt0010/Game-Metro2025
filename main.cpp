@@ -6,14 +6,17 @@
 #include "Bullet.h"
 #include<vector>
 #include "Enemy.h"
+#include "Spavn.h"
 #include "Cartrige.h"
 #include "View.h"
 #include "LevelLoad.h"
 #include <string>
+#include<ctime>
 using namespace std;
 
 int main()
 {
+    srand(time(0));
 
     float timerDead = 5.0;
 
@@ -36,7 +39,9 @@ int main()
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
     textures::Enemy_texture();
-    Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(500, 300), 50);
+    //Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(500, 300), 50);
+    vector<Enemy> enemies;
+    spawnEnemy(10, 15, enemies, textures::enemy_texture);
     
     textures::Cartrige_texture();
     
@@ -48,8 +53,7 @@ int main()
     float fireRate = 0.2f;
 
     vector<Cartriges> cartrige;
-    cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(600, 400));
-    cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(400, 200));
+    spawnCartriges(4, 6, cartrige, textures::cartrige_texture);
 
     sf::Clock clock;
 
@@ -76,11 +80,16 @@ int main()
         getCameraPosition(player->getPosition());
         automat->Update_weapon(time, player, window);
         
-
-        enemy->ataka(time, player);
+        for (auto& enemy : enemies) {
+            sf::Vector2f player_p = player->getPosition();
+            enemy.setPlayerPosition(player_p);
+            enemy.ataka(time, player);
+            enemy.Update(time);
+        }
+       /* enemy->ataka(time, player);
         sf::Vector2f p = player->getPosition();
         enemy->setPlayerPosition(p);
-        enemy->Update(time);
+        enemy->Update(time);*/
         
 
         fireCooldown -= time;
@@ -103,7 +112,7 @@ int main()
             }
         }
 
-        for (int i = 0; i < bullets.size(); ) {
+        /*for (int i = 0; i < bullets.size(); ) {
             bullets[i].Update(time);
 
             if (enemy && enemy->isIntersection(bullets[i].getSprite())) {
@@ -118,13 +127,32 @@ int main()
             else {
                 ++i;
             }
-        }
+        }*/
+        for (int i = 0; i < bullets.size(); ) {
+            bullets[i].Update(time);
 
+            bool hit = false;
+            for (auto& enemy : enemies) {
+                if (enemy.isIntersection(bullets[i].getSprite())) {
+                    enemy.takeDamage(bullets[i].m_damage);
+                    hit = true;
+                    break;
+                }
+            }
+
+            if (hit || !bullets[i].isAlife()) {
+                bullets.erase(bullets.begin() + i);
+            }
+            else {
+                ++i;
+            }
+        }
 
 
         if (player->getPosition().x > 3840 && player->getPosition().x < 3904 && player->getPosition().y > 340 && player->getPosition().y < 416) {
             cartrige.clear();
             bullets.clear();
+            enemies.clear();
             num_level++;
 
             name_fail_map = "Levels/level_" + to_string(num_level);
@@ -134,9 +162,8 @@ int main()
             player->setPosition(p);
 
             
-            delete enemy;
-            enemy = new Enemy(textures::enemy_texture, sf::Vector2f(600, 300), 50);
-
+           
+            spawnEnemy(10, 15, enemies, textures::enemy_texture);
           
             cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(600, 400));
             cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(400, 200));
@@ -160,8 +187,10 @@ int main()
 
         window.draw(player->getSprite());
         window.draw(automat->getSprite());
-        window.draw(enemy->getSprite());
-        
+       // window.draw(enemy->getSprite());
+        for (auto& enemy : enemies) {
+            window.draw(enemy.getSprite());
+        }
       
 
         window.display();
@@ -169,6 +198,6 @@ int main()
     
     delete player;
     delete automat;
-    delete enemy;
+   // delete enemy;
     return 0;
 }

@@ -172,6 +172,7 @@
     <ClInclude Include="Load_Texture.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="Spavn.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
