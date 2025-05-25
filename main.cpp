@@ -9,6 +9,7 @@
 #include "Cartrige.h"
 #include "View.h"
 #include "LevelLoad.h"
+#include <string>
 using namespace std;
 
 int main()
@@ -23,7 +24,10 @@ int main()
 
     textures::Level_texture();
     std::vector<sf::Sprite> levelTiles;
-    LevelLoad("Levels/level_1.txt", textures::level_texture, levelTiles);
+
+    int num_level = 1;
+    string name_fail_map = "Levels/level_" + to_string(num_level);
+    LevelLoad(name_fail_map + ".txt", textures::level_texture, levelTiles);
 
     textures::Player_setTextures();
     Player* player = new Player(textures::player_texture, sf::Vector2f(200, 300), 100);
@@ -66,6 +70,9 @@ int main()
 
         
         player->Update(time);
+        player->restrictions();
+
+
         getCameraPosition(player->getPosition());
         automat->Update_weapon(time, player, window);
         
@@ -111,6 +118,28 @@ int main()
             else {
                 ++i;
             }
+        }
+
+
+
+        if (player->getPosition().x > 3840 && player->getPosition().x < 3904 && player->getPosition().y > 340 && player->getPosition().y < 416) {
+            cartrige.clear();
+            bullets.clear();
+            num_level++;
+
+            name_fail_map = "Levels/level_" + to_string(num_level);
+            LevelLoad(name_fail_map + ".txt", textures::level_texture, levelTiles);
+
+            sf::Vector2f p(100, 400);
+            player->setPosition(p);
+
+            
+            delete enemy;
+            enemy = new Enemy(textures::enemy_texture, sf::Vector2f(600, 300), 50);
+
+          
+            cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(600, 400));
+            cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(400, 200));
         }
         
        

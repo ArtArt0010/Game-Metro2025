@@ -1,5 +1,6 @@
 #pragma once
 #include "Character.h"
+#include "Constants.h"
 
 class PlayerController;
 
@@ -22,6 +23,7 @@ public:
 
 	void Update(float time) override;
 	void setState(State state);
+	void restrictions();
 
 	void setCountCartrige(int c_cartrige);
 	int getCountCartrige();

@@ -83,6 +83,29 @@ void Player::setState(State state) {
 	m_state = state;
 }
 
+void Player::restrictions()
+{
+	sf::Vector2f player_pos_buff = getPosition();
+
+	if (player_pos_buff.x < 20) {
+		player_pos_buff.x = 20;
+	}
+	//ограничение по длине, но пока что нет длины:)
+	if (player_pos_buff.x + getSize().x > mapWidth) {
+		player_pos_buff.x = mapWidth - getSize().x;
+	}
+
+	if (player_pos_buff.y < 20) {
+		player_pos_buff.y = 20;
+	}
+
+	if (player_pos_buff.y + getSize().y > mapHeight) {
+		player_pos_buff.y = mapHeight - getSize().y; 
+	}
+
+	// применяем результат один раз
+	setPosition(player_pos_buff);
+}
 void Player::setCountCartrige(int c_cartrige)
 {
 	count_cartrige += c_cartrige;

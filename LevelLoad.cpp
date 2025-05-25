@@ -31,6 +31,12 @@ void LevelLoad(const std::string& filename, sf::Texture& tileTexture, std::vecto
             case '1':
                 tile.setTextureRect(sf::IntRect(32, 0, 32, 32));
                 break;
+            case '2':
+                tile.setTextureRect(sf::IntRect(128, 0, 32, 32));
+                break;
+            case '3':
+                tile.setTextureRect(sf::IntRect(160, 0, 32, 32));
+                break;
             default:
                 break;
             }
