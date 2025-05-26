@@ -16,6 +16,9 @@ AutomatController* AutomatController::getAutomatController() {
 
 void AutomatController::controllAutomat(Automat* automat, Player* player, sf::RenderWindow& window, float time) {
     //привязка автомата к игроку
+    if (player->is_Life() == false) {
+        return;
+    }
 
     automat->setOrigen(automat->getSize().x / 2.f, automat->getSize().y / 2.f);
 

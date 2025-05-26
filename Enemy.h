@@ -16,7 +16,7 @@ private:
 	bool Dead_animation = false;
 
 	bool Ataka = false;
-
+	bool player_dead = false;
 public:
 	int my_damage = 5;
 	Enemy() = delete;

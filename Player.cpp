@@ -29,50 +29,86 @@ void Player::Update(float time){
 	
 	
 	
-	m_state = State::IDLE;
-	m_controller->controllPlayer(this, time);
-	bool facingRight = (getDirection() == Direction::RIGHT);
+	
+	if (is_Life()) {
+		m_state = State::IDLE;
+		m_controller->controllPlayer(this, time);
+		bool facingRight = (getDirection() == Direction::RIGHT);
 
-	if (m_state == State::RUN) {
-		if (facingRight == true) {
-			m_elapsedTime += time;
+		if (m_state == State::RUN) {
+			if (facingRight == true) {
+				m_elapsedTime += time;
 
 
-			if (m_elapsedTime >= m_animationSpeed) {
-				m_currentFrame = (m_currentFrame + 1) % m_numFrames;
-				m_sprite.setTextureRect(sf::IntRect(
-					m_currentFrame * m_frameWidth,
-					0,
-					m_frameWidth,
-					m_frameHeight));
-				m_elapsedTime = 0.f;
+				if (m_elapsedTime >= m_animationSpeed) {
+					m_currentFrame = (m_currentFrame + 1) % m_numFrames;
+					m_sprite.setTextureRect(sf::IntRect(
+						m_currentFrame * m_frameWidth,
+						0,
+						m_frameWidth,
+						m_frameHeight));
+					m_elapsedTime = 0.f;
+				}
 			}
+			else {
+				m_elapsedTime += time;
+
+
+				if (m_elapsedTime >= m_animationSpeed) {
+					m_currentFrame = (m_currentFrame + 1) % m_numFrames;
+					m_sprite.setTextureRect(sf::IntRect(
+						m_currentFrame * m_frameWidth,
+						m_frameWidth,
+						m_frameWidth,
+						m_frameHeight));
+					m_elapsedTime = 0.f;
+				}
+			}
+
 		}
 		else {
-			m_elapsedTime += time;
-
-
-			if (m_elapsedTime >= m_animationSpeed) {
-				m_currentFrame = (m_currentFrame + 1) % m_numFrames;
-				m_sprite.setTextureRect(sf::IntRect(
-					m_currentFrame * m_frameWidth,
-					m_frameWidth,
-					m_frameWidth,
-					m_frameHeight));
-				m_elapsedTime = 0.f;
+			if (facingRight == true) {
+				m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+			}
+			else {
+				m_sprite.setTextureRect(sf::IntRect(0, m_frameWidth, m_frameWidth, m_frameHeight));
 			}
 		}
-		
+		m_sprite.setPosition(m_Position);
 	}
+
+
+
+
+	///////////////////////смерть
 	else {
-		if (facingRight == true) {
-			m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+		m_elapsedTime += time;
+
+		if (m_elapsedTime >= m_animationSpeed && !is_Dead) {
+			if (m_currentFrame < 3) {
+				m_currentFrame++;
+				m_sprite.setTextureRect(sf::IntRect(
+					m_currentFrame * m_frameWidth,
+					5 * m_frameWidth,
+					m_frameWidth,
+					m_frameHeight));
+			}
+			else {
+				is_Dead = true;
+				
+				m_sprite.setTextureRect(sf::IntRect(
+					2 * m_frameWidth,
+					5 * m_frameWidth,
+					m_frameWidth,
+					m_frameHeight));
+			}
+			m_elapsedTime = 0.f;
 		}
-		else {
-			m_sprite.setTextureRect(sf::IntRect(0, m_frameWidth, m_frameWidth, m_frameHeight));
-		}
+
+		
+		m_sprite.setPosition(m_Position);
+		return;
 	}
-	m_sprite.setPosition(m_Position);
 
 }
 
@@ -115,4 +151,23 @@ int Player::getCountCartrige()
 {
 	return count_cartrige;
 }
+
+bool Player::is_Life()
+{
+	if (getHP() <= 0) {
+		return false;
+	}
+	return true;
+}
+
+void Player::setLife(bool Life)
+{
+	if (Life == true) {
+		m_hp = 100;
+		is_Dead = false;
+		count_cartrige = 1;
+	}
+}
+
+
 

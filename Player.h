@@ -16,6 +16,7 @@ private:
 
 public:
 	int count_cartrige = 1;
+	bool is_Dead = false;
 	Player() = delete;
 	Player(sf::Texture& texture, sf::Vector2f start_pos, int hp);
 	
@@ -27,6 +28,7 @@ public:
 
 	void setCountCartrige(int c_cartrige);
 	int getCountCartrige();
-	
+	bool is_Life();
+	void setLife(bool Life);
 
 };

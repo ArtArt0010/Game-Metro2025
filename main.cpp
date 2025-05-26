@@ -16,14 +16,22 @@ using namespace std;
 
 int main()
 {
+    sf::Font font;
+    font.loadFromFile("Texturs/RodchenkoBTT.ttf");
     srand(time(0));
+    sf::Text text("", font, 50);
+    sf::Text text2("", font, 30);
+
+
+
 
     float timerDead = 5.0;
 
 
-    sf::RenderWindow window(sf::VideoMode(1000, 900), "SFML works!");
 
-    view.reset(sf::FloatRect(0, 0, 1000, 900));
+    sf::RenderWindow window(sf::VideoMode(1240, 900), "SFML works!");
+
+    view.reset(sf::FloatRect(0, 0, 1240, 900));
 
     textures::Level_texture();
     std::vector<sf::Sprite> levelTiles;
@@ -39,7 +47,7 @@ int main()
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
     textures::Enemy_texture();
-    //Enemy* enemy = new Enemy(textures::enemy_texture, sf::Vector2f(500, 300), 50);
+   
     vector<Enemy> enemies;
     spawnEnemy(10, 15, enemies, textures::enemy_texture);
     
@@ -59,9 +67,7 @@ int main()
 
     
     while (window.isOpen()) {
-       /* float time = clock.getElapsedTime().asMicroseconds();
-        clock.restart();
-        time /= 300;*/
+      
  
         float time = clock.restart().asSeconds();
         sf::Event event;
@@ -86,10 +92,7 @@ int main()
             enemy.ataka(time, player);
             enemy.Update(time);
         }
-       /* enemy->ataka(time, player);
-        sf::Vector2f p = player->getPosition();
-        enemy->setPlayerPosition(p);
-        enemy->Update(time);*/
+     
         
 
         fireCooldown -= time;
@@ -112,22 +115,7 @@ int main()
             }
         }
 
-        /*for (int i = 0; i < bullets.size(); ) {
-            bullets[i].Update(time);
-
-            if (enemy && enemy->isIntersection(bullets[i].getSprite())) {
-                enemy->takeDamage(bullets[i].m_damage);
-                bullets.erase(bullets.begin() + i);
-                continue;
-            }
-
-            if (!bullets[i].isAlife()) {
-                bullets.erase(bullets.begin() + i);
-            }
-            else {
-                ++i;
-            }
-        }*/
+       
         for (int i = 0; i < bullets.size(); ) {
             bullets[i].Update(time);
 
@@ -165,14 +153,27 @@ int main()
            
             spawnEnemy(10, 15, enemies, textures::enemy_texture);
           
-            cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(600, 400));
-            cartrige.emplace_back(textures::cartrige_texture, sf::Vector2f(400, 200));
         }
         
-       
+        if (player->is_Life() == false) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                cartrige.clear();
+                bullets.clear();
+                enemies.clear();
+                LevelLoad("Levels/level_1.txt", textures::level_texture, levelTiles);
+                sf::Vector2f p(100, 400);
+                player->setPosition(p);
+                player->setLife(1);
+
+
+                spawnEnemy(10, 15, enemies, textures::enemy_texture);
+            }
+       }
         
         window.setView(view);
         window.clear();
+
+        
        
         for (auto& tile : levelTiles) {
             window.draw(tile);
@@ -191,13 +192,26 @@ int main()
         for (auto& enemy : enemies) {
             window.draw(enemy.getSprite());
         }
-      
+        if (!player->is_Life()) {
+            text.setString("Game Over");
+            text2.setString("Enter -> restart");
+
+            text.setFillColor(sf::Color::Red);
+            text2.setFillColor(sf::Color::Red);
+            text.setCharacterSize(100);
+            sf::FloatRect textBounds = text.getLocalBounds();
+            text.setOrigin(textBounds.width / 2, textBounds.height / 2);
+            text.setPosition(view.getCenter());
+            text2.setPosition(view.getCenter().x, view.getCenter().y + 80);
+            window.draw(text);
+            window.draw(text2);
+        }
 
         window.display();
     }
     
     delete player;
     delete automat;
-   // delete enemy;
+
     return 0;
 }

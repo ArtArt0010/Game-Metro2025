@@ -32,7 +32,9 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 {
 	m_state = State_w::STOP;
 	m_controller->controllAutomat(this, player, window, time);
-
+	if (player->is_Life() == false) {
+		return;
+	}
 	
 	m_elapsedTime_w += time;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && getCartridges() != 0){

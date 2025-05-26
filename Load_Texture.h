@@ -5,7 +5,7 @@ namespace textures {
     sf::Texture player_texture;
 
     static void Player_setTextures() {
-        player_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png");
+        player_texture.loadFromFile("Texturs/Gamer_spriteSheet4.png");
         
     }
     sf::Texture automat_texture;

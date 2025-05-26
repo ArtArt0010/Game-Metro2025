@@ -30,6 +30,12 @@ Enemy::~Enemy(){}
 
 void Enemy::Update(float time)
 {
+	
+	if (player_dead && !isDead()) {
+	
+		return;
+	}
+
 	if (Ataka) {
 
 		if (m_Position.x > PlayerPosition.x) {
@@ -191,6 +197,10 @@ void Enemy::takeDamage(int dmg)
 void Enemy::ataka(float time, Player* player)
 {
 	if (isDead()) return;
+	if (player->is_Life() == false) {
+		player_dead = true;
+		return;
+	}
 	
 	sf::Vector2f dir = PlayerPosition - m_Position;
 	float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
