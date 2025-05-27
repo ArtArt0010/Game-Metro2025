@@ -29,8 +29,9 @@ int main()
     float timerDead = 5.0;
 
 
+    sf::RenderWindow window(sf::VideoMode(1200, 900), "SFML works!");
 
-    sf::RenderWindow window(sf::VideoMode(1240, 900), "SFML works!");
+    view.reset(sf::FloatRect(0, 0, 1000, 900));
 
     view.reset(sf::FloatRect(0, 0, 1240, 900));
 
