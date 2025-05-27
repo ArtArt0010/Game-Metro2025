@@ -12,6 +12,7 @@
 #include "LevelLoad.h"
 #include <string>
 #include<ctime>
+#include"Boss.h"
 using namespace std;
 
 int main()
@@ -42,7 +43,10 @@ int main()
 
     textures::Player_setTextures();
     Player* player = new Player(textures::player_texture, sf::Vector2f(200, 300), 100);
-
+/////////////////////
+    textures::Boss_texture();
+    Boss* boss = nullptr;
+/////////////////////
     textures::Automat_texture();
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
@@ -92,9 +96,14 @@ int main()
             enemy.ataka(time, player);
             enemy.Update(time);
         }
-     
-        
-
+        sf::Vector2f player_p = player->getPosition();
+        ///////////////////////
+        if (boss != nullptr) {
+            boss->setPlayerPosition(player_p);
+            boss->ataka(time, player);
+            boss->Update(time);
+        }
+        /////////////////////////////
         fireCooldown -= time;
         if (automat->getState() == State_w::SHOOTING && automat->getCartridges() != 0) {
             if (fireCooldown <= 0.f) {
@@ -136,7 +145,24 @@ int main()
             }
         }
 
-
+        if (boss != nullptr) {
+            for (int i = 0; i < bullets.size(); ) {
+                bullets[i].Update(time);
+                if (boss && boss->isIntersection(bullets[i].getSprite())) {
+                    boss->takeDamage(bullets[i].m_damage);
+                    bullets.erase(bullets.begin() + i);
+                    continue;
+                }
+                if (!bullets[i].isAlife()) {
+                    bullets.erase(bullets.begin() + i);
+                }
+                else {
+                    ++i;
+                }
+            }
+        }
+        ///////////обработка уровня
+        bool flag_finel_level = false;
         if (player->getPosition().x > 3840 && player->getPosition().x < 3904 && player->getPosition().y > 340 && player->getPosition().y < 416) {
             cartrige.clear();
             bullets.clear();
@@ -152,7 +178,10 @@ int main()
             
            
             spawnEnemy(10, 15, enemies, textures::enemy_texture);
-          
+            spawnCartriges(5, 9, cartrige, textures::cartrige_texture);
+            if (num_level == 3 && boss == nullptr) {
+                boss = new Boss(textures::boss_texture, sf::Vector2f(500, 200), 150, 10, 200.f, 64, 0.08, 5.f);
+            }
         }
         
         if (player->is_Life() == false) {
@@ -164,12 +193,16 @@ int main()
                 sf::Vector2f p(100, 400);
                 player->setPosition(p);
                 player->setLife(1);
-
-
+                num_level = 1;
+                boss = nullptr;
                 spawnEnemy(10, 15, enemies, textures::enemy_texture);
+                spawnCartriges(4, 6, cartrige, textures::cartrige_texture);
             }
        }
         
+        
+
+
         window.setView(view);
         window.clear();
 
@@ -185,13 +218,16 @@ int main()
         for (auto& crt : cartrige) {
             window.draw(crt.getSprite());
         }
-
+        if (boss != nullptr) {
+            window.draw(boss->getSprite());
+        }
         window.draw(player->getSprite());
         window.draw(automat->getSprite());
-       // window.draw(enemy->getSprite());
+       
         for (auto& enemy : enemies) {
             window.draw(enemy.getSprite());
         }
+        
         if (!player->is_Life()) {
             text.setString("Game Over");
             text2.setString("Enter -> restart");
@@ -212,6 +248,6 @@ int main()
     
     delete player;
     delete automat;
-
+    delete boss;
     return 0;
 }

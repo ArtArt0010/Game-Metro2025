@@ -30,6 +30,14 @@ namespace textures {
         }*/
     }
 
+    sf::Texture boss_texture;
+    static void Boss_texture() {
+        boss_texture.loadFromFile("Texturs/Monster2.png");
+        /* if (!enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png")) {
+             std::cout << "No";
+         }*/
+    }
+
     sf::Texture cartrige_texture;
     static void Cartrige_texture() {
         cartrige_texture.loadFromFile("Texturs/Cartriges.png");

@@ -1,8 +1,8 @@
-#include"Enemy.h"
+#include"Boss.h"
 
 //#include"iostream"
 
-Enemy::Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp, int damage, float speed, int sprite_size, float animation_speed, float scale)
+Boss::Boss(sf::Texture& texture, sf::Vector2f start_pos, int hp, int damage, float speed, int sprite_size, float animation_speed, float scale)
 {
 	m_Position = start_pos;
 	m_hp = hp;
@@ -21,18 +21,19 @@ Enemy::Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp, int damage, f
 	m_sprite.setTexture(texture);
 	m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
 	m_sprite.setScale(scale, scale);
+	m_sprite.setOrigin(sf::Vector2f(m_sprite.getOrigin().x + 20, m_sprite.getOrigin().y+10));
 	m_sprite.setPosition(m_Position);
 	m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
-	
+
 }
 
-Enemy::~Enemy(){}
+Boss::~Boss() {}
 
-void Enemy::Update(float time)
+void Boss::Update(float time)
 {
-	
+
 	if (player_dead && !isDead()) {
-	
+
 		return;
 	}
 
@@ -46,14 +47,14 @@ void Enemy::Update(float time)
 				m_currentFrame = (m_currentFrame + 1) % 4;
 				m_sprite.setTextureRect(sf::IntRect(
 					m_currentFrame * m_frameWidth,
-					2 * m_frameWidth,
+					 4*m_frameWidth,
 					m_frameWidth,
 					m_frameHeight));
 				m_elapsedTime = 0.f;
 			}
 
 			if (timerAtaka <= 0.f) {
-				Ataka = false; 
+				Ataka = false;
 			}
 
 			return;
@@ -66,14 +67,14 @@ void Enemy::Update(float time)
 				m_currentFrame = (m_currentFrame + 1) % 4;
 				m_sprite.setTextureRect(sf::IntRect(
 					m_currentFrame * m_frameWidth,
-					3 * m_frameWidth,
+					1 * m_frameWidth,
 					m_frameWidth,
 					m_frameHeight));
 				m_elapsedTime = 0.f;
 			}
 
 			if (timerAtaka <= 0.f) {
-				Ataka = false; 
+				Ataka = false;
 			}
 
 			return;
@@ -102,7 +103,7 @@ void Enemy::Update(float time)
 					m_currentFrame = (m_currentFrame + 1) % m_numFrames;
 					m_sprite.setTextureRect(sf::IntRect(
 						m_currentFrame * m_frameWidth,
-						0,
+						3 * m_frameWidth,
 						m_frameWidth,
 						m_frameHeight));
 					m_elapsedTime = 0.f;
@@ -118,7 +119,7 @@ void Enemy::Update(float time)
 					m_currentFrame = (m_currentFrame + 1) % m_numFrames;
 					m_sprite.setTextureRect(sf::IntRect(
 						m_currentFrame * m_frameWidth,
-						m_frameWidth,
+						0*m_frameWidth,
 						m_frameWidth,
 						m_frameHeight));
 					m_elapsedTime = 0.f;
@@ -139,11 +140,11 @@ void Enemy::Update(float time)
 
 
 			if (m_elapsedTime >= m_animationSpeed) {
-				if (m_currentFrame < 3) {
+				if (m_currentFrame < 4) {
 					m_currentFrame++;
 					m_sprite.setTextureRect(sf::IntRect(
 						m_currentFrame * m_frameWidth,
-						4 * m_frameWidth,
+						6 * m_frameWidth,
 						m_frameWidth,
 						m_frameHeight));
 				}
@@ -159,11 +160,11 @@ void Enemy::Update(float time)
 
 
 			if (m_elapsedTime >= m_animationSpeed) {
-				if (m_currentFrame < 3) {
+				if (m_currentFrame < 4) {
 					m_currentFrame++;
 					m_sprite.setTextureRect(sf::IntRect(
 						m_currentFrame * m_frameWidth,
-						5 * m_frameWidth,
+						7 * m_frameWidth,
 						m_frameWidth,
 						m_frameHeight));
 				}
@@ -171,16 +172,16 @@ void Enemy::Update(float time)
 					Dead_animation = true; // анимация завершена
 				}
 				m_elapsedTime = 0.f;
-				
+
 			}
-			
+
 		}
-		
+
 	}
 
 }
 
-void Enemy::takeDamage(int dmg)
+void Boss::takeDamage(int dmg)
 {
 	if (isDead()) return;
 
@@ -188,54 +189,54 @@ void Enemy::takeDamage(int dmg)
 	//std::cout << m_hp << " ";
 
 	if (m_hp <= 0) {
-		m_currentFrame = 0;      
+		m_currentFrame = 0;
 		m_elapsedTime = 0.f;
 	}
-	
+
 }
 
-void Enemy::ataka(float time, Player* player)
+void Boss::ataka(float time, Player* player)
 {
 	if (isDead()) return;
 	if (player->is_Life() == false) {
 		player_dead = true;
 		return;
 	}
-	
+
 	sf::Vector2f dir = PlayerPosition - m_Position;
 	float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-	if (len < 30.f) {
+	if (len < 50.f) {
 		if (len != 0.f)
 			dir /= len;
-	
-	
-			if (timerAtaka <= 0) {
-				player->take_Damage(my_damage);
-				timerAtaka = AtakaDelay;
-				m_currentFrame = 0;
-				m_elapsedTime = 0.f;
-
-				Ataka = true;
 
 
-			
+		if (timerAtaka <= 0) {
+			player->take_Damage(my_damage);
+			timerAtaka = AtakaDelay;
+			m_currentFrame = 0;
+			m_elapsedTime = 0.f;
+
+			Ataka = true;
+
+
+
 		}
 
 	}
 
 }
 
-void Enemy::setPlayerPosition(sf::Vector2f& player_pos)
+void Boss::setPlayerPosition(sf::Vector2f& player_pos)
 {
 	PlayerPosition = player_pos;
 }
 
-bool Enemy::isDead() const
+bool Boss::isDead() const
 {
 	return m_hp <= 0;
 }
 
-bool Enemy::isIntersection(const sf::Sprite& bull)
+bool Boss::isIntersection(const sf::Sprite& bull)
 {
 	if (m_sprite.getGlobalBounds().intersects(bull.getGlobalBounds())) {
 		//std::cout << 1;

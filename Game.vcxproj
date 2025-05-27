@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="AutomatController.cpp" />
     <ClCompile Include="Automate.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Cartrige.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Automate.h" />
     <ClInclude Include="Automat_Controller.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Cartrige.h" />
     <ClInclude Include="Character.h" />

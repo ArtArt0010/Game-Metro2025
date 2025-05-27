@@ -1,14 +1,14 @@
 #pragma once
 
+
 #include "Character.h"
-//#include "Bullet.h"
-//class EnemyManager;
+
 
 #include"Player.h"
 
-class Enemy : public Character {
+class Boss : public Character {
 private:
-	
+
 
 	float timerAtaka = 0.f;
 	float AtakaDelay = 0.8;
@@ -19,10 +19,10 @@ private:
 	bool player_dead = false;
 public:
 	int my_damage;
-	Enemy() = delete;
-	Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp, int damage, float speed, int sprite_size, float animation_speed, float scale);
+	Boss() = delete;
+	Boss(sf::Texture& texture, sf::Vector2f start_pos, int hp, int damage, float speed, int sprite_size, float animation_speed, float scale);
 
-	~Enemy();
+	~Boss();
 
 	void Update(float time) override;
 	void takeDamage(int dmg);

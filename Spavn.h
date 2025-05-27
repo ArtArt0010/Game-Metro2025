@@ -26,7 +26,7 @@ void spawnEnemy(int min_count, int max_count, std::vector<Enemy>& enemys, sf::Te
 		buff_y = y;
 
 
-		enemys.emplace_back(texture, sf::Vector2f(x, y), 50);
+		enemys.emplace_back(texture, sf::Vector2f(x, y), 50, 5, 250.f, 32, 0.08, 3.f);
 
 		
 	}
