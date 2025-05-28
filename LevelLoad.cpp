@@ -8,6 +8,9 @@ void LevelLoad(const std::string& filename, sf::Texture& tileTexture, std::vecto
         std::cout << "Error open file";
         return;
     }
+    if (!levelTiles.empty()) {
+        levelTiles.clear();
+    }
 
     std::string line;
     int y = 0;
@@ -22,6 +25,9 @@ void LevelLoad(const std::string& filename, sf::Texture& tileTexture, std::vecto
 
             switch (ch)
             {
+            case'-':
+                tile.setColor(sf::Color::Transparent);
+                break;
             case ' ':
                 tile.setTextureRect(sf::IntRect(0, 0, 32, 32));
                 break;
@@ -37,11 +43,12 @@ void LevelLoad(const std::string& filename, sf::Texture& tileTexture, std::vecto
             case '3':
                 tile.setTextureRect(sf::IntRect(160, 0, 32, 32));
                 break;
+
             default:
                 break;
             }
      
-
+            
             tile.setPosition(pos);
            tile.setScale(2, 2);
             levelTiles.push_back(tile);

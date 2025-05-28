@@ -69,7 +69,7 @@ int main()
     spawnCartriges(4, 6, cartrige, textures::cartrige_texture);
 
     sf::Clock clock;
-
+    bool Vinner = false;
     
     while (window.isOpen()) {
       
@@ -163,29 +163,41 @@ int main()
             }
         }
         ///////////обработка уровня
-        bool flag_finel_level = false;
+        
         if (player->getPosition().x > 3840 && player->getPosition().x < 3904 && player->getPosition().y > 340 && player->getPosition().y < 416) {
             cartrige.clear();
             bullets.clear();
             enemies.clear();
             num_level++;
 
-            name_fail_map = "Levels/level_" + to_string(num_level);
-            LevelLoad(name_fail_map + ".txt", textures::level_texture, levelTiles);
+            if (num_level != 4) {
+                name_fail_map = "Levels/level_" + to_string(num_level);
+                LevelLoad(name_fail_map + ".txt", textures::level_texture, levelTiles);
 
-            sf::Vector2f p(100, 400);
-            player->setPosition(p);
 
-            
-           
-            spawnEnemy(10, 15, enemies, textures::enemy_texture);
-            spawnCartriges(5, 9, cartrige, textures::cartrige_texture);
+                sf::Vector2f p(100, 400);
+                player->setPosition(p);
+
+
+
+                spawnEnemy(10, 15, enemies, textures::enemy_texture);
+                spawnCartriges(5, 9, cartrige, textures::cartrige_texture);
+            }
             if (num_level == 3 && boss == nullptr) {
-                boss = new Boss(textures::boss_texture, sf::Vector2f(500, 200), 150, 10, 200.f, 64, 0.08, 5.f);
+                boss = new Boss(textures::boss_texture, sf::Vector2f(2000, 200), 150, 10, 200.f, 64, 0.08, 5.f);
+            }
+            if (num_level == 4 && boss->isDead()) {
+               
+                LevelLoad("Levels/station.txt", textures::level_texture, levelTiles);
+                sf::Vector2f p(300, 400);
+                player->setPosition(p);
+                player->setLife(1);
+                boss = nullptr;
+                Vinner = true;
             }
         }
         
-        if (player->is_Life() == false) {
+        if ((player->is_Life() == false) || Vinner == true) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
                 cartrige.clear();
                 bullets.clear();
@@ -196,8 +208,10 @@ int main()
                 player->setLife(1);
                 num_level = 1;
                 boss = nullptr;
+                Vinner = false;
                 spawnEnemy(10, 15, enemies, textures::enemy_texture);
                 spawnCartriges(4, 6, cartrige, textures::cartrige_texture);
+               
             }
        }
         
@@ -227,6 +241,21 @@ int main()
        
         for (auto& enemy : enemies) {
             window.draw(enemy.getSprite());
+        }
+
+        if (Vinner == true && player->is_Life()) {
+            text.setString("You Vin");
+            text2.setString("Enter -> restart");
+
+            text.setFillColor(sf::Color::Red);
+            text2.setFillColor(sf::Color::Red);
+            text.setCharacterSize(100);
+            sf::FloatRect textBounds = text.getLocalBounds();
+            text.setOrigin(textBounds.width / 2, textBounds.height / 2);
+            text.setPosition(view.getCenter());
+            text2.setPosition(view.getCenter().x, view.getCenter().y + 80);
+            window.draw(text);
+            window.draw(text2);
         }
         
         if (!player->is_Life()) {
