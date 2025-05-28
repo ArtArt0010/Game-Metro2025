@@ -12,4 +12,6 @@ public:
 	Train(sf::Texture& texture, sf::Vector2f pos);
 	void Update(float time);
 
+	bool isIntersection(const sf::Sprite& bull);
+
 };

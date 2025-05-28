@@ -21,3 +21,12 @@ void Train::Update(float time)
 	
 }
 
+bool Train::isIntersection(const sf::Sprite& bull)
+{
+	if (m_sprite_obj.getGlobalBounds().intersects(bull.getGlobalBounds())) {
+		//std::cout << 1;
+		return true;
+	}
+
+	return false;
+}

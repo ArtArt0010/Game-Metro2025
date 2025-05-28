@@ -106,7 +106,7 @@ void Player::Update(float time){
 			m_elapsedTime = 0.f;
 		}
 
-		
+		m_prevPosition = m_Position;
 		m_sprite.setPosition(m_Position);
 		return;
 	}
@@ -127,7 +127,7 @@ void Player::restrictions()
 	if (player_pos_buff.x < 20) {
 		player_pos_buff.x = 20;
 	}
-	//ограничение по длине, но пока что нет длины:)
+
 	if (player_pos_buff.x + getSize().x > mapWidth) {
 		player_pos_buff.x = mapWidth - getSize().x;
 	}
@@ -172,5 +172,29 @@ void Player::setLife(bool Life)
 	}
 }
 
+void Player::colisions(const std::vector<sf::Sprite>& collidables, float time) {
+	sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
+
+	for (const auto& object : collidables) {
+		if (playerBounds.intersects(object.getGlobalBounds())) {
+			sf::Vector2f updated_pos = getPosition();
+			updated_pos.x -= 300 * time;
+			m_sprite.setPosition(updated_pos);
+			break;  
+		}
+	}
+}
+
+void Player::colision(const sf::Sprite& sprite) {
+	sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
+
+	
+		if (playerBounds.intersects(sprite.getGlobalBounds())) {
+			m_Position.x -= 10;
+			m_sprite.setPosition(m_Position);
+		
+		
+	}
+}
 
 

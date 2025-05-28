@@ -14,6 +14,7 @@ private:
 	State m_state;
 	PlayerController* m_controller;
 
+	sf::Vector2f m_prevPosition;
 public:
 	int count_cartrige = 1;
 	bool is_Dead = false;
@@ -30,5 +31,8 @@ public:
 	int getCountCartrige();
 	bool is_Life();
 	void setLife(bool Life);
+	void colisions(const std::vector<sf::Sprite>& collidables, float time);
+
+	void colision(const sf::Sprite& sprite);
 
 };

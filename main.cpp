@@ -89,6 +89,7 @@ int main()
         train1->Update(time);
         
         player->Update(time);
+        player->colision(train1->getSprite());
         player->restrictions();
 
 
