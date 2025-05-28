@@ -205,7 +205,7 @@ void Boss::ataka(float time, Player* player)
 
 	sf::Vector2f dir = PlayerPosition - m_Position;
 	float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-	if (len < 150.f) {
+	if (len < 100.f) {
 		if (len != 0.f)
 			dir /= len;
 

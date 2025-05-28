@@ -13,6 +13,7 @@
 #include <string>
 #include<ctime>
 #include"Boss.h"
+#include"GameObject.h"
 using namespace std;
 
 int main()
@@ -48,6 +49,11 @@ int main()
     textures::Boss_texture();
     Boss* boss = nullptr;
 /////////////////////
+    textures::Train1_texture();
+    GameObject* train1 = new GameObject();
+    train1->m_pos = sf::Vector2f(400, 500);
+    train1->m_sprite_obj.setTexture(textures::train1_texture);
+
     textures::Automat_texture();
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
 
@@ -180,6 +186,7 @@ int main()
 
 
 
+
                 spawnEnemy(10, 15, enemies, textures::enemy_texture);
                 spawnCartriges(5, 9, cartrige, textures::cartrige_texture);
             }
@@ -221,7 +228,7 @@ int main()
         window.setView(view);
         window.clear();
 
-        
+        window.draw(train1->m_sprite_obj);
        
         for (auto& tile : levelTiles) {
             window.draw(tile);

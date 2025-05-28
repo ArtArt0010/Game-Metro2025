@@ -52,4 +52,11 @@ namespace textures {
              std::cout << "No";
          }*/
     }
+    sf::Texture train1_texture;
+    static void Train1_texture() {
+        train1_texture.loadFromFile("Texturs/Train1.png");
+        /* if (!enemy_texture.loadFromFile("Texturs/Gamer_spriteSheet3.png")) {
+             std::cout << "No";
+         }*/
+    }
 }
