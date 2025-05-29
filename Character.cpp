@@ -1,5 +1,5 @@
 #include "Character.h"
-#include "iostream"
+//#include "iostream"
 
 Character::~Character() {}
 
@@ -7,7 +7,7 @@ void Character::take_Damage(int damage)
 {
 	m_hp -= damage;
 
-	std::cout << m_hp << " ";
+	//std::cout << m_hp << " ";
 }
 
 void Character::setPosition(sf::Vector2f& pos)

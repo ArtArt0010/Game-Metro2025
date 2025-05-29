@@ -7,9 +7,10 @@ Train::Train(sf::Texture& texture, sf::Vector2f pos)
 	m_sprite_obj.setTexture(texture);
 	m_pos.x = pos.x;
 	m_pos.y = pos.y;
-	m_sprite_obj.setTextureRect(sf::IntRect(0, 0, 182, 40));
+	m_sprite_obj.setTextureRect(sf::IntRect(10, 0, 182, 40));
 
-	
+	sf::Vector2u textureSize = texture.getSize();
+	//m_sprite_obj.setTextureRect(sf::IntRect(10, -10, textureSize.x, textureSize.y));
 
 
 }

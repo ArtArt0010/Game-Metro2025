@@ -2,6 +2,8 @@
 #include "Automat_Controller.h"
 //#include "Bullet.h"
 //#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
 
 Automat::Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges)
 {
@@ -30,6 +32,12 @@ Automat::~Automat(){}
 
 void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window)
 {
+	sf::SoundBuffer reloadBuffer;
+	sf::Sound reloadSound;
+	reloadBuffer.loadFromFile("Sounds/reload_avt.wav");
+	reloadSound.setBuffer(reloadBuffer);
+	
+
 	m_state = State_w::STOP;
 	m_controller->controllAutomat(this, player, window, time);
 	if (player->is_Life() == false) {
@@ -64,6 +72,7 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 
 
 	if (getCartridges() == 0 && player->count_cartrige != 0) {//перезарядка, но нужно доделать!!!
+		reloadSound.play();
 		timeReload -= time;
 		if (timeReload <= 0) {
 			player->count_cartrige -= 1;

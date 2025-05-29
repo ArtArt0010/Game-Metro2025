@@ -36,7 +36,7 @@ void Boss::Update(float time)
 
 		return;
 	}
-	m_prevPosition = getPosition();
+	
 	if (Ataka) {
 
 		if (m_Position.x > PlayerPosition.x) {
@@ -83,10 +83,10 @@ void Boss::Update(float time)
 	if (!isDead() && !Ataka) {
 
 
-
+		m_prevPosition = getPosition();
 		sf::Vector2f dir = PlayerPosition - m_Position;
 		float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-		if (len < 300.f) {
+		if (len < 700.f) {
 			if (len != 0.f)
 				dir /= len;
 
@@ -247,10 +247,10 @@ bool Boss::isIntersection(const sf::Sprite& bull)
 }
 
 void Boss::colision(const sf::Sprite& sprite) {
-	sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
+	sf::FloatRect BossrBounds = m_sprite.getGlobalBounds();
 
 
-	bool bounds = playerBounds.intersects(sprite.getGlobalBounds());
+	bool bounds = BossrBounds.intersects(sprite.getGlobalBounds());
 	//sf::Vector2f player_pos_buff = getPosition();
 
 	if (bounds) {

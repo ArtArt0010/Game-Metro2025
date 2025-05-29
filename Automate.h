@@ -14,6 +14,7 @@ private:
 	State_w m_state;
 	AutomatController* m_controller;
 	float timeReload = 2.f;
+	bool reload = false;
 
 public:
 	Automat() = delete;

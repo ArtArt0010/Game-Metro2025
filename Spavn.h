@@ -63,29 +63,92 @@ void spawnCartriges(int min_count, int max_count, std::vector<Cartriges>& cartri
 
 	
 }
+//void spawnTrain(int min_count, int max_count, std::vector<Train>& trains, sf::Texture& texture, float y) {
+//	int count = rand() % (max_count - min_count + 1) + min_count;
+//
+//	int buff_x = 0;
+//	for (int i = 0; i < count; i++) {
+//
+//		int x = rand() % ((Widht_x - 1500) - 400 + 1) + 400;
+//		
+//
+//		int ampt = 0;
+//		while ((abs(buff_x - x) <2000) && ampt < 60) {
+//			x = rand() % ((Widht_x - 1500) - 400 + 1) + 400;
+//		;
+//			ampt++;
+//		}
+//
+//		buff_x = x;
+//		
+//
+//
+//		trains.emplace_back(texture, sf::Vector2f(x, y));
+//
+//	}
+//
+//
+//}
+//void spawnTrain(int min_count, int max_count, std::vector<Train>& trains, sf::Texture& texture, float y) {
+//	int count = rand() % (max_count - min_count + 1) + min_count;
+//
+//	for (int i = 0; i < count; ++i) {
+//		int x = 0;
+//		bool valid = false;
+//		int attempts = 0;
+//
+//		while (!valid && attempts < 100) {
+//			x = rand() % ((Widht_x - 1500) - 300 + 1) + 300;
+//			valid = true;
+//
+//			for (const auto& train : trains) {
+//				if (std::abs(train.getPosition().x - x) < 500.f) { // минимальная дистанция
+//					valid = false;
+//					break;
+//				}
+//			}
+//
+//			attempts++;
+//		}
+//
+//		if (valid) {
+//			trains.emplace_back(texture, sf::Vector2f(x, y));
+//		}
+//	}
+//}
 void spawnTrain(int min_count, int max_count, std::vector<Train>& trains, sf::Texture& texture, float y) {
 	int count = rand() % (max_count - min_count + 1) + min_count;
 
-	int buff_x = 0;
-	for (int i = 0; i < count; i++) {
+float minSeparation = 182*6 + 800.f; // хотим не менее 50px между краями
 
+for (int i = 0; i < count; ++i) {
+	bool placed = false;
+	int attempts = 0;
+	const int MAX_ATTEMPTS = 100;
+
+	while (!placed && attempts < MAX_ATTEMPTS) {
+		++attempts;
 		int x = rand() % ((Widht_x - 1500) - 400 + 1) + 400;
-		
 
-		int ampt = 0;
-		while ((abs(buff_x - x) <2000) && ampt < 60) {
-			x = rand() % ((Widht_x - 1500) - 400 + 1) + 400;
-		;
-			ampt++;
+		// проверяем, что новая позиция не ближе minSeparation
+		bool ok = true;
+		for (auto& t : trains) {
+			float existingX = t.getSprite().getPosition().x;
+			if (std::abs(existingX - x) < minSeparation) {
+				ok = false;
+				break;
+			}
 		}
 
-		buff_x = x;
-		
-
-
-		trains.emplace_back(texture, sf::Vector2f(x, y));
-
+		if (ok) {
+			trains.emplace_back(texture, sf::Vector2f(x, y));
+			placed = true;
+		}
 	}
 
-
+	// Если после MAX_ATTEMPTS не удалось найти место — просто пропускаем этот спавн
+	if (!placed) {
+		std::cerr << "Warning: could not place train #" << i << "\n";
+	}
+}
 }

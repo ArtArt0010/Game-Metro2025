@@ -39,6 +39,10 @@ void Player::Update(float time){
 		bool facingRight = (getDirection() == Direction::RIGHT);
 
 		if (m_state == State::RUN) {
+
+			
+
+		
 			if (facingRight == true) {
 				m_elapsedTime += time;
 
@@ -189,15 +193,20 @@ void Player::colisions(const std::vector<sf::Sprite>& collidables, float time) {
 }
 
 void Player::colision(const sf::Sprite& sprite) {
-	sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
+	//sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
+	
 
-
-	bool bounds = playerBounds.intersects(sprite.getGlobalBounds());
+	bool bounds = m_sprite.getGlobalBounds().intersects(sprite.getGlobalBounds());
 	//sf::Vector2f player_pos_buff = getPosition();
 	
 	if (bounds) {
 		setPosition(m_prevPosition);
 	}
+}
+
+State Player::getState()
+{
+	return m_state;
 }
 
 

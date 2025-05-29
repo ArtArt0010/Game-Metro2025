@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Constants.h"
 
+
 class PlayerController;
 
 enum class State {
@@ -16,6 +17,7 @@ private:
 
 	sf::Vector2f m_prevPosition;
 public:
+	int count_dead_enemy = 0;
 	int count_cartrige = 1;
 	bool is_Dead = false;
 	Player() = delete;
@@ -34,5 +36,5 @@ public:
 	void colisions(const std::vector<sf::Sprite>& collidables, float time);
 
 	void colision(const sf::Sprite& sprite);
-
+	State getState();
 };
