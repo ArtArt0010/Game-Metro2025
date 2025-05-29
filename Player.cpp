@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "PlayerController.h"
 #include "Weapon.h"
+
 //#include <iostream>
 Player::Player(sf::Texture& texture, sf::Vector2f start_pos, int hp)
 {
@@ -32,6 +33,7 @@ void Player::Update(float time){
 	
 	
 	if (is_Life()) {
+		m_prevPosition = m_Position;
 		m_state = State::IDLE;
 		m_controller->controllPlayer(this, time);
 		bool facingRight = (getDirection() == Direction::RIGHT);
@@ -75,6 +77,7 @@ void Player::Update(float time){
 				m_sprite.setTextureRect(sf::IntRect(0, m_frameWidth, m_frameWidth, m_frameHeight));
 			}
 		}
+		
 		m_sprite.setPosition(m_Position);
 	}
 
@@ -106,7 +109,7 @@ void Player::Update(float time){
 			m_elapsedTime = 0.f;
 		}
 
-		m_prevPosition = m_Position;
+		
 		m_sprite.setPosition(m_Position);
 		return;
 	}
@@ -177,9 +180,9 @@ void Player::colisions(const std::vector<sf::Sprite>& collidables, float time) {
 
 	for (const auto& object : collidables) {
 		if (playerBounds.intersects(object.getGlobalBounds())) {
-			sf::Vector2f updated_pos = getPosition();
-			updated_pos.x -= 300 * time;
-			m_sprite.setPosition(updated_pos);
+			
+			setPosition(m_prevPosition);
+			
 			break;  
 		}
 	}
@@ -188,12 +191,12 @@ void Player::colisions(const std::vector<sf::Sprite>& collidables, float time) {
 void Player::colision(const sf::Sprite& sprite) {
 	sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
 
+
+	bool bounds = playerBounds.intersects(sprite.getGlobalBounds());
+	//sf::Vector2f player_pos_buff = getPosition();
 	
-		if (playerBounds.intersects(sprite.getGlobalBounds())) {
-			m_Position.x -= 10;
-			m_sprite.setPosition(m_Position);
-		
-		
+	if (bounds) {
+		setPosition(m_prevPosition);
 	}
 }
 

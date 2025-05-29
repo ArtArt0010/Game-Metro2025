@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Constants.h"
 #include "Cartrige.h"
+#include "Trains.h"
 void spawnEnemy(int min_count, int max_count, std::vector<Enemy>& enemys, sf::Texture& texture) {
 	
 	int count_enemy = rand() % (max_count - min_count + 1) + min_count;
@@ -26,7 +27,7 @@ void spawnEnemy(int min_count, int max_count, std::vector<Enemy>& enemys, sf::Te
 		buff_y = y;
 
 
-		enemys.emplace_back(texture, sf::Vector2f(x, y), 50, 5, 250.f, 32, 0.08, 3.f);
+		enemys.emplace_back(texture, sf::Vector2f(x, y), 30, 5, 250.f, 32, 0.08, 3.f);
 
 		
 	}
@@ -59,4 +60,32 @@ void spawnCartriges(int min_count, int max_count, std::vector<Cartriges>& cartri
 		cartrige.emplace_back(texture, sf::Vector2f(x, y));
 
 	}
+
+	
+}
+void spawnTrain(int min_count, int max_count, std::vector<Train>& trains, sf::Texture& texture, float y) {
+	int count = rand() % (max_count - min_count + 1) + min_count;
+
+	int buff_x = 0;
+	for (int i = 0; i < count; i++) {
+
+		int x = rand() % ((Widht_x - 1500) - 400 + 1) + 400;
+		
+
+		int ampt = 0;
+		while ((abs(buff_x - x) <2000) && ampt < 60) {
+			x = rand() % ((Widht_x - 1500) - 400 + 1) + 400;
+		;
+			ampt++;
+		}
+
+		buff_x = x;
+		
+
+
+		trains.emplace_back(texture, sf::Vector2f(x, y));
+
+	}
+
+
 }

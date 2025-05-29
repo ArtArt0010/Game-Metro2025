@@ -9,7 +9,7 @@
 class Boss : public Character {
 private:
 
-
+	sf::Vector2f m_prevPosition;
 	float timerAtaka = 0.f;
 	float AtakaDelay = 0.8;
 	sf::Vector2f PlayerPosition;
@@ -33,4 +33,5 @@ public:
 	bool isDead() const;
 
 	bool isIntersection(const sf::Sprite& bull);
+	void colision(const sf::Sprite& sprite);
 };

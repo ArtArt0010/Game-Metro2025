@@ -35,7 +35,7 @@ void Enemy::Update(float time)
 	
 		return;
 	}
-
+	m_prevPosition = getPosition();
 	if (Ataka) {
 
 		if (m_Position.x > PlayerPosition.x) {
@@ -243,4 +243,16 @@ bool Enemy::isIntersection(const sf::Sprite& bull)
 	}
 
 	return false;
+}
+void Enemy::colisions(const std::vector<Train>& collidables) {
+	sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
+
+	for (const auto& object : collidables) {
+		if (playerBounds.intersects(object.getSprite().getGlobalBounds())) {
+
+			setPosition(m_prevPosition);
+
+			break;
+		}
+	}
 }

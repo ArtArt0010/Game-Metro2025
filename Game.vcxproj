@@ -171,6 +171,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HelthBar.h" />
     <ClInclude Include="LevelLoad.h" />
     <ClInclude Include="Load_Texture.h" />
     <ClInclude Include="Player.h" />

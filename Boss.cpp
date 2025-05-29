@@ -36,7 +36,7 @@ void Boss::Update(float time)
 
 		return;
 	}
-
+	m_prevPosition = getPosition();
 	if (Ataka) {
 
 		if (m_Position.x > PlayerPosition.x) {
@@ -244,4 +244,16 @@ bool Boss::isIntersection(const sf::Sprite& bull)
 	}
 
 	return false;
+}
+
+void Boss::colision(const sf::Sprite& sprite) {
+	sf::FloatRect playerBounds = m_sprite.getGlobalBounds();
+
+
+	bool bounds = playerBounds.intersects(sprite.getGlobalBounds());
+	//sf::Vector2f player_pos_buff = getPosition();
+
+	if (bounds) {
+		setPosition(m_prevPosition);
+	}
 }

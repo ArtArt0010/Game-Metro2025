@@ -14,6 +14,7 @@
 #include<ctime>
 #include"Boss.h"
 #include"Trains.h"
+#include"HelthBar.h"
 using namespace std;
 
 int main()
@@ -36,6 +37,8 @@ int main()
 
     view.reset(sf::FloatRect(0, 0, 1240, 900));
 
+    LifeBar lifeBarPlayer;
+
     textures::Level_texture();
     std::vector<sf::Sprite> levelTiles;
 
@@ -50,7 +53,9 @@ int main()
     Boss* boss = nullptr;
 /////////////////////
     textures::Train1_texture();
-    Train* train1 = new Train(textures::train1_texture, sf::Vector2f(500, 300));
+    vector<Train> trains;
+    //Train* train1 = new Train(textures::train1_texture, sf::Vector2f(500, 300));
+    spawnTrain(1, 3, trains, textures::train1_texture, 310);
 
     textures::Automat_texture();
     Automat* automat = new Automat(textures::automat_texture, sf::Vector2f(200, 300), 30);
@@ -86,13 +91,19 @@ int main()
             }
         }
 
-        train1->Update(time);
+        //train1->Update(time);
         
         player->Update(time);
-        player->colision(train1->getSprite());
+        //player->colision(train1->getSprite());
         player->restrictions();
 
+        lifeBarPlayer.update(player->getHP());
 
+        for (auto& train : trains) {
+            train.Update(time);
+            player->colision(train.getSprite());
+            //boss->colision(train.getSprite());
+        }
         getCameraPosition(player->getPosition());
         automat->Update_weapon(time, player, window);
         
@@ -101,6 +112,7 @@ int main()
             enemy.setPlayerPosition(player_p);
             enemy.ataka(time, player);
             enemy.Update(time);
+           // enemy.colisions(trains);
         }
         sf::Vector2f player_p = player->getPosition();
         ///////////////////////
@@ -173,6 +185,7 @@ int main()
             cartrige.clear();
             bullets.clear();
             enemies.clear();
+            trains.clear();
             num_level++;
 
             if (num_level != 4) {
@@ -188,6 +201,7 @@ int main()
 
                 spawnEnemy(10, 15, enemies, textures::enemy_texture);
                 spawnCartriges(5, 9, cartrige, textures::cartrige_texture);
+                spawnTrain(1, 2, trains, textures::train1_texture, 310);
             }
             if (num_level == 3 && boss == nullptr) {
                 boss = new Boss(textures::boss_texture, sf::Vector2f(2000, 200), 150, 10, 200.f, 64, 0.08, 5.f);
@@ -208,15 +222,18 @@ int main()
                 cartrige.clear();
                 bullets.clear();
                 enemies.clear();
+                trains.clear();
                 LevelLoad("Levels/level_1.txt", textures::level_texture, levelTiles);
                 sf::Vector2f p(100, 400);
                 player->setPosition(p);
                 player->setLife(1);
+                lifeBarPlayer.update(player->getHP());
                 num_level = 1;
                 boss = nullptr;
                 Vinner = false;
                 spawnEnemy(10, 15, enemies, textures::enemy_texture);
                 spawnCartriges(4, 6, cartrige, textures::cartrige_texture);
+                spawnTrain(1, 2, trains, textures::train1_texture, 310);
                
             }
        }
@@ -228,12 +245,15 @@ int main()
         window.clear();
 
         
-       
+        
         for (auto& tile : levelTiles) {
             window.draw(tile);
         }
-
-        window.draw(train1->getSprite());
+        lifeBarPlayer.draw(window);
+        //window.draw(train1->getSprite());
+        for (auto& train : trains) {
+            window.draw(train.getSprite());
+        }
 
         for (auto & bullet : bullets) {
             window.draw(bullet.getSprite());
