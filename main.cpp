@@ -226,8 +226,8 @@ int main()
         }
         ///////////обработка уровня
     
-        if (player->getPosition().x > 3840 && player->getPosition().x < 3904 &&
-            player->getPosition().y > 340 && player->getPosition().y < 416) {
+        if (player->getPosition().x > 3840 && player->getPosition().x < 4000 &&
+            player->getPosition().y > 320 && player->getPosition().y < 420) {
 
            
             if (num_level == 3) {
