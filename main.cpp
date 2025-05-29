@@ -25,14 +25,25 @@ int main()
     sf::Sound shootSound;
     sf::SoundBuffer runBuffer;
     sf::Sound runSound;
+    sf::SoundBuffer themBuffer;
+    sf::Sound themSound;
+
+    shootSound.setVolume(80);
+
     if (!shootBuffer.loadFromFile("Sounds/shoot.wav")) {
         std::cerr << "Failed to load shoot.wav" << std::endl;
     }
     if (!runBuffer.loadFromFile("Sounds/Top.wav")) {
         std::cerr << "Failed to load shoot.wav" << std::endl;
     }
+    if (!themBuffer.loadFromFile("Sounds/Metro2025_them.wav")) {
+        std::cerr << "Failed to load shoot.wav" << std::endl;
+    }
+
+
     runSound.setBuffer(runBuffer);
     shootSound.setBuffer(shootBuffer);
+    themSound.setBuffer(themBuffer);
 
     sf::Font font;
     font.loadFromFile("Texturs/RodchenkoBTT.ttf");
@@ -271,6 +282,7 @@ int main()
 
         if ((player->is_Life() == false) || Vinner == true) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                themSound.stop();
                 cartrige.clear();
                 bullets.clear();
                 enemies.clear();
@@ -325,7 +337,11 @@ int main()
         }
 
         if (Vinner == true && player->is_Life()) {
-            text.setString("You Win");
+            
+            if (themSound.getStatus() != sf::Sound::Playing) {
+                themSound.play();
+            }
+            text.setString("You VVin");
             text2.setString("Enter -> restart");
             Count_Enemy.setString("Enemies killed " + to_string(player->count_dead_enemy));
 

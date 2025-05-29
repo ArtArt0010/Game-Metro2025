@@ -2,7 +2,7 @@
 #include "Automat_Controller.h"
 //#include "Bullet.h"
 //#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+
 
 
 Automat::Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges)
@@ -23,7 +23,11 @@ Automat::Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges)
 	m_sprite_weapon.setScale(6.5, 6.5);
 	m_size_weapon = sf::Vector2f(m_sprite_weapon.getTextureRect().width, m_sprite_weapon.getTextureRect().height);
 
+
 	
+
+	reloadBuffer.loadFromFile("Sounds/reload_avt.wav");
+	reloadSound.setBuffer(reloadBuffer);
 
 
 }
@@ -32,10 +36,8 @@ Automat::~Automat(){}
 
 void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window)
 {
-	sf::SoundBuffer reloadBuffer;
-	sf::Sound reloadSound;
-	reloadBuffer.loadFromFile("Sounds/reload_avt.wav");
-	reloadSound.setBuffer(reloadBuffer);
+	
+	
 	
 
 	m_state = State_w::STOP;
@@ -72,7 +74,10 @@ void Automat::Update_weapon(float time, Player* player, sf::RenderWindow& window
 
 
 	if (getCartridges() == 0 && player->count_cartrige != 0) {//перезарядка, но нужно доделать!!!
-		reloadSound.play();
+		
+		if (reloadSound.getStatus() != sf::Sound::Playing) {
+			reloadSound.play();
+		}
 		timeReload -= time;
 		if (timeReload <= 0) {
 			player->count_cartrige -= 1;

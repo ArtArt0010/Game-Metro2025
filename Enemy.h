@@ -1,5 +1,5 @@
 #pragma once
-
+#include <SFML/Audio.hpp>
 #include "Character.h"
 //#include "Bullet.h"
 //class EnemyManager;
@@ -9,7 +9,10 @@
 
 class Enemy : public Character {
 private:
-	
+	bool saund_play = false;
+	sf::SoundBuffer skorpBuffer;
+	sf::Sound skorpSound;
+
 	sf::Vector2f m_prevPosition;
 	float timerAtaka = 0.f;
 	float AtakaDelay = 0.8;

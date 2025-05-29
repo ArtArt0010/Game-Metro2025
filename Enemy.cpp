@@ -23,6 +23,9 @@ Enemy::Enemy(sf::Texture& texture, sf::Vector2f start_pos, int hp, int damage, f
 	m_sprite.setScale(scale, scale);
 	m_sprite.setPosition(m_Position);
 	m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
+
+	skorpBuffer.loadFromFile("Sounds/enemy_run.wav");
+	skorpSound.setBuffer(skorpBuffer);
 	
 }
 
@@ -82,7 +85,10 @@ void Enemy::Update(float time)
 	if (!isDead() && !Ataka) {
 
 
-
+		//if ((skorpSound.getStatus() != sf::Sound::Playing) && !saund_play) {
+		//	skorpSound.play();
+		//	//saund_play = true;
+		//}
 		sf::Vector2f dir = PlayerPosition - m_Position;
 		float len = std::sqrt(dir.x * dir.x + dir.y * dir.y);
 		if (len < 300.f) {
@@ -133,6 +139,7 @@ void Enemy::Update(float time)
 
 	//Смерть
 	else {
+		skorpSound.stop();
 		if (m_Position.x > PlayerPosition.x) {
 
 			m_elapsedTime += time;

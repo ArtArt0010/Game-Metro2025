@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 #include "Weapon.h"
-
+#include <SFML/Audio.hpp>
 class AutomatController;
 
 enum class State_w {
@@ -15,7 +15,9 @@ private:
 	AutomatController* m_controller;
 	float timeReload = 2.f;
 	bool reload = false;
-
+	
+	sf::SoundBuffer reloadBuffer;
+	sf::Sound reloadSound;
 public:
 	Automat() = delete;
 	Automat(sf::Texture& texture, sf::Vector2f start_pos, int cartridges);
